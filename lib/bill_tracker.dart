@@ -1,15 +1,17 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+// import 'package:charts_flutter/flutter.dart' as charts;
 import 'lists.dart';
-List<Expense> expenseData =[
-Expense(DateTime(2023, 3, 22), 25.0),
-Expense(DateTime(2023, 3, 23), 30.0),
-Expense(DateTime(2023, 3, 24), 20.0),
-Expense(DateTime(2023, 3, 25), 40.0),
-Expense(DateTime(2023, 3, 26), 15.0),
-Expense(DateTime(2023, 3, 27), 10.0),
-Expense(DateTime(2023, 3, 28), 35.0),
+import 'package:syncfusion_flutter_charts/charts.dart';
+
+List<Expense> chartData = [
+  Expense(DateTime(2023, 3, 22), 25.0),
+  Expense(DateTime(2023, 3, 23), 30.0),
+  Expense(DateTime(2023, 3, 24), 20.0),
+  Expense(DateTime(2023, 3, 25), 40.0),
+  Expense(DateTime(2023, 3, 26), 15.0),
+  Expense(DateTime(2023, 3, 27), 10.0),
+  Expense(DateTime(2023, 3, 28), 35.0),
 ];
 class BillTrackerPage extends StatefulWidget {
   const BillTrackerPage({super.key});
@@ -41,17 +43,6 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
         ));
   }
 
- final List<charts.Series<Expense, DateTime>> _expenseData = [
-    // replace with your own expense data
-    charts.Series<Expense, DateTime>(
-      id: 'Expenses',
-      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-      domainFn: (Expense expense, _) => expense.date,
-      measureFn: (Expense expense, _) => expense.amount,
-      data: expenseData
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,15 +70,7 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: charts.TimeSeriesChart(
-                    _expenseData,
-                    animate: true,
-                    primaryMeasureAxis: charts.NumericAxisSpec (
-                      tickProviderSpec: const charts.BasicNumericTickProviderSpec (
-                        desiredTickCount: 5,
-                      ),
-                    ),
-                  ),
+                  child: _buildDefaultLineChart(),
                 ),
               ),
               TextButton(
@@ -105,6 +88,44 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
       ),
     );
   }
+  @override
+  void dispose() {
+    chartData.clear();
+    super.dispose();
+  }
+}
+
+List<LineSeries<Expense, int>> _getDefaultLineSeries() {
+  return <LineSeries<Expense, int>>[
+    LineSeries<Expense, int>(
+        animationDuration: 2500,
+        dataSource: chartData,
+        xValueMapper: (Expense expense, _) => expense.date.day.toInt(),
+        yValueMapper: (Expense expense, _) => expense.amount,
+        width: 2,
+        name: 'Debit',
+        markerSettings: const MarkerSettings(isVisible: true)),
+  ];
+}
+
+/// Get the cartesian chart with default line series
+SfCartesianChart _buildDefaultLineChart() {
+  return SfCartesianChart(
+    plotAreaBorderWidth: 0,
+    title: ChartTitle(text: 'Debit vs Credit'),
+    legend: Legend(
+        overflowMode: LegendItemOverflowMode.wrap),
+    primaryXAxis: NumericAxis(
+        edgeLabelPlacement: EdgeLabelPlacement.shift,
+        interval: 2,
+        majorGridLines: const MajorGridLines(width: 0)),
+    primaryYAxis: NumericAxis(
+        labelFormat: '{value}%',
+        axisLine: const AxisLine(width: 0),
+        majorTickLines: const MajorTickLines(color: Colors.transparent)),
+    series: _getDefaultLineSeries(),
+    tooltipBehavior: TooltipBehavior(enable: true),
+  );
 }
 
 class Expense {
