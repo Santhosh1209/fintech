@@ -23,6 +23,9 @@ class homepage extends StatelessWidget {
           ),
         ),
       ),
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
     );
   }
 }
@@ -35,20 +38,20 @@ class fintech extends StatefulWidget {
 }
 
 class _fintechState extends State<fintech> {
+  final ButtonStyle style = ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 18.0, fontFamily: 'Inter'));
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       //crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Image(image:
-      //NetworkImage('file:///C:/Users/P.%20Santhosh/Downloads/Rain%20Credit.png'),
+       const Image(image:
           AssetImage('images/Rain Credit.png'),
       ),
-        Expanded(
+       const Expanded(
           flex: 2,
-          child:
-          Padding(
+          child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
@@ -64,9 +67,8 @@ class _fintechState extends State<fintech> {
             ),
           ),
         ),
-        Expanded(
-          child:
-          Padding(
+        const Expanded(
+          child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
@@ -82,60 +84,42 @@ class _fintechState extends State<fintech> {
             ),
           ),
         ),
-        Expanded
-          (
-          child:
-          Padding(
+        Expanded(
+          child: Padding(
             padding: EdgeInsets.all(20.0),
-            child:
-            SizedBox(
-    width: 250,
-    child : TextButton(
-              onPressed: ()
-              {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()
-                ));
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.lightBlue,
-              ),
-              child: Text(
-                'Sign up',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  color: Colors.white,
-                  fontSize: 18.0,
+            child: SizedBox(
+              width: 250,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()));
+                },
+                style: style,
+                child: const Text(
+                  'Sign up',
                 ),
               ),
             ),
           ),
-          ),
         ),
-        Expanded
-          (
-          child:
-          Padding(
+        Expanded(
+          child: Padding(
             padding: EdgeInsets.all(20.0),
-            child: SizedBox
-              (
+            child: SizedBox(
               width: 250,
-              child: TextButton(
+              child: OutlinedButton(
               onPressed: ()
               {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
               },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.lightBlue,
-              ),
+              style: style,
               child: Text(
                 'Log in',
                 style: TextStyle(
                   fontFamily: 'Inter',
-                  color: Colors.white,
                   fontSize: 18.0,
                 ),
               ),
-            ),
             ),
           ),
         ),
@@ -143,6 +127,3 @@ class _fintechState extends State<fintech> {
     );
   }
 }
-
-
-
