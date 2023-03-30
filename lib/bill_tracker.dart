@@ -1,85 +1,75 @@
-import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'lists.dart';
-List<Expense> expenseData =[
-Expense(DateTime(2023, 3, 22), 25.0),
-Expense(DateTime(2023, 3, 23), 30.0),
-Expense(DateTime(2023, 3, 24), 20.0),
-Expense(DateTime(2023, 3, 25), 40.0),
-Expense(DateTime(2023, 3, 26), 15.0),
-Expense(DateTime(2023, 3, 27), 10.0),
-Expense(DateTime(2023, 3, 28), 35.0),
-];
-class BillTrackerPage extends StatefulWidget {
-  @override
-  _BillTrackerPageState createState() => _BillTrackerPageState();
+
+void main() {
+  runApp(billtracker());
 }
 
-class _BillTrackerPageState extends State<BillTrackerPage> {
-  String _userName = "Sriram V"; // replace with user's name
-  String _userImageURL =
-      "https://example.com/user-image.png"; // replace with user's image URL
-
-  List<charts.Series<Expense, DateTime>> _expenseData = [
-    // replace with your own expense data
-    charts.Series<Expense, DateTime>(
-      id: 'Expenses',
-      colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-      domainFn: (Expense expense, _) => expense.date,
-      measureFn: (Expense expense, _) => expense.amount,
-      data:
-        expenseData
-    ),
-  ];
-
+class billtracker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Bill Tracker"),
-      ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(height: 20.0),
-          CircleAvatar(
-            radius: 50.0,
-            backgroundImage: NetworkImage(_userImageURL),
-          ),
-          SizedBox(height: 10.0),
-          Text(
-            _userName,
-            style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 20.0),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: charts.TimeSeriesChart(
-                _expenseData,
-                animate: true,
-                primaryMeasureAxis: charts.NumericAxisSpec(
-                  tickProviderSpec:
-                  const charts.BasicNumericTickProviderSpec(
-                    desiredTickCount: 5,
+    return MaterialApp(
+      title: 'Bill Tracker',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Bill Tracker'),
+        ),
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Container(
+                  child: SfCartesianChart(
+                    primaryXAxis: CategoryAxis(),
+                    series: <ChartSeries>[
+                      LineSeries<ExpenseData, String>(
+                        dataSource: [
+                          ExpenseData(DateTime(2023, 03, 20), 2500),
+                          ExpenseData(DateTime(2023, 03, 21), 1000),
+                          ExpenseData(DateTime(2023, 03, 22), 1500),
+                          ExpenseData(DateTime(2023, 03, 23), 2000),
+                          ExpenseData(DateTime(2023, 03, 24), 1000),
+                          ExpenseData(DateTime(2023, 03, 25), 2500),
+                          ExpenseData(DateTime(2023, 03, 26), 2000),
+                          ExpenseData(DateTime(2023, 03, 27), 1500),
+                          ExpenseData(DateTime(2023, 03, 28), 1000),
+                          ExpenseData(DateTime(2023, 03, 29), 2500),
+                          ExpenseData(DateTime(2023, 03, 30), 1500),
+                          ExpenseData(DateTime(2023, 03, 31), 2000),
+                        ],
+                        xValueMapper: (ExpenseData data, _) =>
+                        '${data.date.day}/${data.date.month}/${data.date.year}',
+                        yValueMapper: (ExpenseData data, _) => data.amount,
+                      ),
+                    ],
                   ),
                 ),
               ),
-            ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+                },
+                child: Text('Add Expense'),
+              ),
+            ],
           ),
-          TextButton(onPressed:()
-              {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
-              },
-              child: Text('press panra enna'))
-        ],
+        ),
       ),
     );
   }
 }
-class Expense {
+
+class ExpenseData {
   final DateTime date;
   final double amount;
 
-  Expense(this.date, this.amount);
+  ExpenseData(this.date, this.amount);
 }
+
+
+
+
