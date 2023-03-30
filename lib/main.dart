@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 //import 'package:charts_flutter/flutter.dart' as charts;
 import 'bill_tracker.dart';
 import 'signup.dart';
+
 void main() {
   runApp(const homepage());
 }
+
 class homepage extends StatelessWidget {
   const homepage({Key? key}) : super(key: key);
 
@@ -21,6 +23,9 @@ class homepage extends StatelessWidget {
           ),
         ),
       ),
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
     );
   }
 }
@@ -33,20 +38,22 @@ class fintech extends StatefulWidget {
 }
 
 class _fintechState extends State<fintech> {
+  final ButtonStyle style = ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 18.0, fontFamily: 'Inter'));
+
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       //crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Image(image:
-      //NetworkImage('file:///C:/Users/P.%20Santhosh/Downloads/Rain%20Credit.png'),
-          AssetImage('images/Rain Credit.png'),
-      ),
-        Expanded(
+        const Image(
+          image:
+              //NetworkImage('file:///C:/Users/P.%20Santhosh/Downloads/Rain%20Credit.png'),
+              AssetImage('images/Rain Credit.png'),
+        ),
+        const Expanded(
           flex: 2,
-          child:
-          Padding(
+          child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
@@ -62,9 +69,8 @@ class _fintechState extends State<fintech> {
             ),
           ),
         ),
-        Expanded(
-          child:
-          Padding(
+        const Expanded(
+          child: Padding(
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
@@ -80,60 +86,38 @@ class _fintechState extends State<fintech> {
             ),
           ),
         ),
-        Expanded
-          (
-          child:
-          Padding(
+        Expanded(
+          child: Padding(
             padding: EdgeInsets.all(20.0),
-            child:
-            SizedBox(
-    width: 250,
-    child : TextButton(
-              onPressed: ()
-              {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpPage()
-                ));
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.lightBlue,
-              ),
-              child: Text(
-                'Sign up',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  color: Colors.white,
-                  fontSize: 18.0,
+            child: SizedBox(
+              width: 250,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignUpPage()));
+                },
+                style: style,
+                child: const Text(
+                  'Sign up',
                 ),
               ),
             ),
-          ),
           ),
         ),
-        Expanded
-          (
-          child:
-          Padding(
+        Expanded(
+          child: Padding(
             padding: EdgeInsets.all(20.0),
-            child: SizedBox
-              (
+            child: SizedBox(
               width: 250,
-              child: TextButton(
-              onPressed: ()
-              {
-                //true
-              },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.lightBlue,
-              ),
-              child: Text(
-                'Log in',
-                style: TextStyle(
-                  fontFamily: 'Inter',
-                  color: Colors.white,
-                  fontSize: 18.0,
+              child: OutlinedButton(
+                onPressed: () {
+                  //true
+                },
+                style: style,
+                child: const Text(
+                  'Log in',
                 ),
               ),
-            ),
             ),
           ),
         ),
@@ -141,6 +125,3 @@ class _fintechState extends State<fintech> {
     );
   }
 }
-
-
-
