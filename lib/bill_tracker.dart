@@ -1,6 +1,16 @@
+import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
-
+import 'lists.dart';
+List<Expense> expenseData =[
+Expense(DateTime(2023, 3, 22), 25.0),
+Expense(DateTime(2023, 3, 23), 30.0),
+Expense(DateTime(2023, 3, 24), 20.0),
+Expense(DateTime(2023, 3, 25), 40.0),
+Expense(DateTime(2023, 3, 26), 15.0),
+Expense(DateTime(2023, 3, 27), 10.0),
+Expense(DateTime(2023, 3, 28), 35.0),
+];
 class BillTrackerPage extends StatefulWidget {
   @override
   _BillTrackerPageState createState() => _BillTrackerPageState();
@@ -18,15 +28,8 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
       colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
       domainFn: (Expense expense, _) => expense.date,
       measureFn: (Expense expense, _) => expense.amount,
-      data: [
-        Expense(DateTime(2023, 3, 22), 25.0),
-        Expense(DateTime(2023, 3, 23), 30.0),
-        Expense(DateTime(2023, 3, 24), 20.0),
-        Expense(DateTime(2023, 3, 25), 40.0),
-        Expense(DateTime(2023, 3, 26), 15.0),
-        Expense(DateTime(2023, 3, 27), 10.0),
-        Expense(DateTime(2023, 3, 28), 35.0),
-      ],
+      data:
+        expenseData
     ),
   ];
 
@@ -55,7 +58,6 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
               child: charts.TimeSeriesChart(
                 _expenseData,
                 animate: true,
-                dateTimeFactory: const charts.LocalDateTimeFactory(),
                 primaryMeasureAxis: charts.NumericAxisSpec(
                   tickProviderSpec:
                   const charts.BasicNumericTickProviderSpec(
@@ -65,6 +67,11 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
               ),
             ),
           ),
+          TextButton(onPressed:()
+              {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+              },
+              child: Text('press panra enna'))
         ],
       ),
     );
