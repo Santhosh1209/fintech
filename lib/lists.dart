@@ -74,7 +74,8 @@ class _MyAppState extends State<MyApp> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
-              expenseData.add(Expense(DateTime.now(), 50));
+              expenseData.add(Expense(DateTime(2023, 3, 29), 30));
+              expenseData.add(Expense(DateTime(2023, 3, 30), 20));
             });
           },
           child: Icon(Icons.add),
