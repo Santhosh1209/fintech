@@ -5,9 +5,9 @@ import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'loan_fillup.dart';
-import 'model/person_data.dart';
+import 'model/loan_data.dart';
 
-var myBaby = GetIt.I.get<PersonData>();
+var myLoan = GetIt.I.get<LoanDetails>();
 
 class LoanTrackingPage extends StatefulWidget {
   const LoanTrackingPage({Key? key}) : super(key: key);
@@ -128,36 +128,22 @@ class LoanDetailsPage extends StatelessWidget {
 }
 ////////////////////////////////////////
 
-List<ChartSampleData> chartData = [
-  ChartSampleData(DateTime(2020), 3.0),
-  ChartSampleData(DateTime(2021), 6.0),
-  ChartSampleData(DateTime(2023), 9.0),
-  ChartSampleData(DateTime(2024), 12.0),
-  ChartSampleData(DateTime(2025), 15.0),
-  ChartSampleData(DateTime(2026), 18.0),
-];
 
-List<ChartSampleData> chartDataPaid = [
-  ChartSampleData(DateTime(2020), 3.0),
-  ChartSampleData(DateTime(2021), 6.0),
-  ChartSampleData(DateTime(2023), 9.0),
-];
-
-List<AreaSeries<ChartSampleData, DateTime>> _getDefaultAreaSeries() {
-  return <AreaSeries<ChartSampleData, DateTime>>[
-    AreaSeries<ChartSampleData, DateTime>(
-      dataSource: chartData!,
+List<AreaSeries<LoanData, DateTime>> _getDefaultAreaSeries() {
+  return <AreaSeries<LoanData, DateTime>>[
+    AreaSeries<LoanData, DateTime>(
+      dataSource: myLoan.loanDueData!,
       opacity: 0.7,
       name: 'Due',
-      xValueMapper: (ChartSampleData sales, _) => sales.x,
-      yValueMapper: (ChartSampleData sales, _) => sales.y,
+      xValueMapper: (LoanData sales, _) => sales.date,
+      yValueMapper: (LoanData sales, _) => sales.amount,
     ),
-    AreaSeries<ChartSampleData, DateTime>(
-      dataSource: chartDataPaid!,
+    AreaSeries<LoanData, DateTime>(
+      dataSource: myLoan.loanPaidData!,
       opacity: 0.7,
       name: 'Paid',
-      xValueMapper: (ChartSampleData sales, _) => sales.x,
-      yValueMapper: (ChartSampleData sales, _) => sales.y,
+      xValueMapper: (LoanData sales, _) => sales.date,
+      yValueMapper: (LoanData sales, _) => sales.amount,
     )
   ];
 }
@@ -181,11 +167,4 @@ SfCartesianChart _buildDefaultAreaChart() {
     series: _getDefaultAreaSeries(),
     tooltipBehavior: TooltipBehavior(enable: true),
   );
-}
-
-class ChartSampleData {
-  final DateTime x;
-  final num y;
-
-  ChartSampleData(this.x, this.y);
 }
