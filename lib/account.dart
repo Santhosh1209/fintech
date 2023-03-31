@@ -1,43 +1,68 @@
 import 'package:flutter/material.dart';
 
-class accountPage extends StatefulWidget {
-  const accountPage({Key? key}) : super(key: key);
-
+class MyAccountPage extends StatefulWidget {
   @override
-  State<accountPage> createState() => _accountPageState();
+  _MyAccountPageState createState() => _MyAccountPageState();
 }
 
-class _accountPageState extends State<accountPage> {
+class _MyAccountPageState extends State<MyAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar
-        (
-        title: Text("My Account"),
-        centerTitle: true,
+      appBar: AppBar(
+        title: Text('My Account'),
       ),
-      body: Column
-        (
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              CircleAvatar(
-               radius: 50.0,
-                backgroundColor: Colors.blue[900],
-              ),
-              Text(
-                'SRIRAM V',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Poppins'
-                ),
-              ),
-            ],
+          SizedBox(height: 30),
+          CircleAvatar(
+            radius: 50,
+            backgroundImage: NetworkImage('https://example.com/user_profile.jpg'),
           ),
-          Container()
+          SizedBox(height: 20),
+          Text(
+            'SriRam V',
+            style: TextStyle(fontSize: 24),
+          ),
+          SizedBox(height: 40),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Edit Profile'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // Navigate to Edit Profile page
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text('Settings'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // Navigate to Settings page
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.help_outline),
+            title: Text('Help & Support'),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              // Navigate to Help & Support page
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Log out'),
+            onTap: () {
+              // Log out user
+            },
+          ),
         ],
       ),
     );
   }
 }
+
