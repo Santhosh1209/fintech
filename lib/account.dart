@@ -16,6 +16,28 @@ class _accountPageState extends State<accountPage> {
         title: Text("My Account"),
         centerTitle: true,
       ),
+      body: Column
+        (
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+               radius: 50.0,
+                backgroundColor: Colors.blue[900],
+              ),
+              Text(
+                'SRIRAM V',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Poppins'
+                ),
+              ),
+            ],
+          ),
+          Container()
+        ],
+      ),
     );
   }
 }

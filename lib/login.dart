@@ -2,6 +2,8 @@ import 'package:fintech/bill_tracker.dart';
 import 'package:flutter/material.dart';
 import 'forgot_passwd.dart';
 import 'account.dart';
+import 'loan_intropage.dart';
+import 'loan_fillup.dart';
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);
 
@@ -101,7 +103,7 @@ class _loginPageState extends State<loginPage> {
             TextButton(
             onPressed: ()
                 {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => accountPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LoanTrackingPage()));
                 },
           child:
                 Text('Log in Here',
