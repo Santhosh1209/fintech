@@ -62,18 +62,6 @@ class _LoanTrackingPageState extends State<LoanTrackingPage> {
           ),
           );
           },
-
-          // setState(() {
-          //               SafeArea(
-          //                   child: Scaffold
-          //                     (
-          //                     body: Container(
-          //                       child : _buildDefaultLineChart(),
-          //                     )
-          //                   )
-          //               );
-          //             });
-                    //},
                   ),
                 ),
                 Card(

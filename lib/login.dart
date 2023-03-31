@@ -104,7 +104,7 @@ class _loginPageState extends State<loginPage> {
             TextButton(
             onPressed: ()
                 {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoanTrackingPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => MyAccountPage()));
                 },
           child:
                 Text('Log in Here',
