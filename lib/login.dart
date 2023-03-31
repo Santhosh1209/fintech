@@ -2,6 +2,7 @@ import 'package:fintech/bill_tracker.dart';
 import 'package:flutter/material.dart';
 import 'forgot_passwd.dart';
 import 'account.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'loan_intropage.dart';
 import 'loan_fillup.dart';
 class loginPage extends StatefulWidget {
@@ -137,8 +138,14 @@ class _loginPageState extends State<loginPage> {
                       children: [
                         TextButton(
                           onPressed: ()
-                          {
-                            //
+                          async {
+                            const url = 'https://twitter.com/login';
+                            final uri = Uri.parse(url);
+                            if (await canLaunchUrl(Uri())) {
+                          await launchUrl(Uri());
+                          } else {
+                          throw 'Could not launch $url';
+                          }
                           },
                           child: Image(
                               image: AssetImage('images/google.png'),

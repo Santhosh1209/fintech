@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'loan_fillup.dart';
 
 class LoanTrackingPage extends StatefulWidget {
@@ -50,17 +51,29 @@ class _LoanTrackingPageState extends State<LoanTrackingPage> {
                   )
                       : IconButton(
                     icon: Icon(Icons.arrow_forward),
-                    onPressed: () {
-                      // Add your logic here for what should happen when a loan is clicked
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => LoanDetailsPage(
-                            loanName: _loanNames[index],
-                          ),
-                        ),
-                      );
-                    },
+          onPressed: () {
+          Navigator.push(
+          context,
+          MaterialPageRoute(
+          builder: (context) => LoanDetailsPage(
+          loanName: _loanNames[index],
+          loanAmount: _amount[index],
+          ),
+          ),
+          );
+          },
+
+          // setState(() {
+          //               SafeArea(
+          //                   child: Scaffold
+          //                     (
+          //                     body: Container(
+          //                       child : _buildDefaultLineChart(),
+          //                     )
+          //                   )
+          //               );
+          //             });
+                    //},
                   ),
                 ),
                 Card(
@@ -89,8 +102,9 @@ class _LoanTrackingPageState extends State<LoanTrackingPage> {
 
 class LoanDetailsPage extends StatelessWidget {
   final String loanName;
+  final String loanAmount;
 
-  const LoanDetailsPage({Key? key, required this.loanName}) : super(key: key);
+  const LoanDetailsPage({Key? key, required this.loanName, required this.loanAmount}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -99,8 +113,73 @@ class LoanDetailsPage extends StatelessWidget {
         title: Text(loanName),
       ),
       body: Center(
-        child: Text("Loan details for $loanName"),
+        child:
+        Column(
+          children: [
+            Text("Loan details for $loanName"),
+            SizedBox(height: 16),
+            Text("Loan amount: $loanAmount"),
+          ],
+        ),
       ),
     );
   }
 }
+
+List<LineSeries<Expense, String>> _getDefaultLineSeries() {
+  return <LineSeries<Expense, String>>[
+    LineSeries<Expense, String>(
+        animationDuration: 2500,
+        dataSource: chartData,
+        xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+        yValueMapper: (Expense expense, _) => expense.outflow,
+        width: 2,
+        name: 'Debit',
+        markerSettings: const MarkerSettings(isVisible: true)),
+    LineSeries<Expense, String>(
+        animationDuration: 2500,
+        dataSource: chartData,
+        xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+        yValueMapper: (Expense expense, _) => expense.inflow,
+        width: 2,
+        name: 'Credit',
+        markerSettings: const MarkerSettings(isVisible: true)),
+  ];
+}SfCartesianChart _buildDefaultLineChart() {
+  return SfCartesianChart(
+    plotAreaBorderWidth: 0,
+    title: ChartTitle(text: 'Debit vs Credit'),
+    legend: Legend(
+        overflowMode: LegendItemOverflowMode.wrap),
+    primaryXAxis: CategoryAxis(
+        title: AxisTitle(
+            text: 'Day'
+        ),
+        edgeLabelPlacement: EdgeLabelPlacement.shift,
+        interval: 2,
+        majorGridLines: const MajorGridLines(width: 0)),
+    primaryYAxis: NumericAxis(
+        labelFormat: '₹{value}',
+        axisLine: const AxisLine(width: 0),
+        majorTickLines: const MajorTickLines(color: Colors.transparent)),
+    series: _getDefaultLineSeries(),
+    tooltipBehavior: TooltipBehavior(enable: true),
+  );
+}
+
+class Expense {
+  final DateTime date;
+  final double outflow;
+  final double inflow;
+
+  Expense(this.date, this.outflow, this.inflow);
+}
+List<Expense> chartData = [
+  Expense(DateTime(2023, 3, 22), 25.0, 40.0),
+  Expense(DateTime(2023, 3, 23), 30.0, 50.0),
+  Expense(DateTime(2023, 3, 24), 20.0, 30.0),
+  Expense(DateTime(2023, 3, 25), 40.0, 20.0),
+  Expense(DateTime(2023, 3, 26), 15.0, 34.0),
+  Expense(DateTime(2023, 3, 27), 10.0, 50.0),
+  Expense(DateTime(2023, 3, 28), 35.0, 10.0),
+];
