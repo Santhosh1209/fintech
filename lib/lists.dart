@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,16 +28,12 @@ class _MyAppState extends State<MyApp> {
     Expense(DateTime(2023, 3, 28), 35.0),
   ];
 
-  List<charts.Series<Expense, DateTime>> _createData() {
-    return [
-      charts.Series<Expense, DateTime>(
-        id: 'expenses',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (Expense expense, _) => expense.date,
-        measureFn: (Expense expense, _) => expense.amount,
-        data: expenseData,
-      )
-    ];
+  List<ChartData> _createData() {
+    List<ChartData> chartData = [];
+    for (Expense expense in expenseData) {
+      chartData.add(ChartData(expense.date, expense.amount));
+    }
+    return chartData;
   }
 
   @override
@@ -62,11 +58,28 @@ class _MyAppState extends State<MyApp> {
                 itemCount: expenseData.length,
               ),
             ),
-            Container(
-              height: 300,
-              child: charts.TimeSeriesChart(
-                _createData(),
-                animate: true,
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NewActivity()),
+                );
+              },
+              child: Container(
+                height: 300,
+                child: SfCartesianChart(
+                  primaryXAxis: DateTimeAxis(),
+                  series: <ChartSeries>[
+                    LineSeries<ChartData, DateTime>(
+                      dataSource: _createData(),
+                      xValueMapper: (ChartData chartData, _) =>
+                      chartData.date,
+                      yValueMapper: (ChartData chartData, _) =>
+                      chartData.amount,
+                    )
+                  ],
+                ),
               ),
             ),
           ],
@@ -80,6 +93,27 @@ class _MyAppState extends State<MyApp> {
           },
           child: Icon(Icons.add),
         ),
+      ),
+    );
+  }
+}
+
+class ChartData {
+  final DateTime date;
+  final double amount;
+
+  ChartData(this.date, this.amount);
+}
+
+class NewActivity extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('New Activity'),
+      ),
+      body: Center(
+        child: Text('This is a new activity!'),
       ),
     );
   }

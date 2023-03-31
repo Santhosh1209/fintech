@@ -1,3 +1,4 @@
+import 'package:fintech/login.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/material.dart';
 //import 'package:charts_flutter/flutter.dart' as charts;
@@ -122,7 +123,7 @@ class _fintechState extends State<fintech> {
               child: TextButton(
               onPressed: ()
               {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => loginPage()));
               },
               style: TextButton.styleFrom(
                 backgroundColor: Colors.lightBlue,
