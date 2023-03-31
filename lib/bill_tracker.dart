@@ -1,8 +1,10 @@
 import 'dart:core';
+import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
-// import 'package:charts_flutter/flutter.dart' as charts;
 import 'lists.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+var logger = Logger();
 
 List<Expense> chartData = [
   Expense(DateTime(2023, 3, 22), 25.0),
@@ -23,12 +25,14 @@ class BillTrackerPage extends StatefulWidget {
 class _BillTrackerPageState extends State<BillTrackerPage> {
   String _userName = "Sharad"; // replace with user's name
   String _userImageURL =
-      "https://example.com/user-image.png"; // replace with user's image URL
+      "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"; // replace with user's image URL
   final _scaffoldKey =
   GlobalKey<ScaffoldState>(); // state of scaffold to control BottomSheet
   void _showBottomSheet() {
+    logger.e("bruh clidker");
     _scaffoldKey.currentState!.showBottomSheet((context) =>
         SizedBox(
+          // TODO: Edit UI to fix graphs
           height: 200,
           child: Center(
             child: OutlinedButton(
@@ -88,19 +92,19 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
       ),
     );
   }
-  @override
-  void dispose() {
-    chartData.clear();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   chartData.clear();
+  //   super.dispose();
+  // }
 }
 
-List<LineSeries<Expense, int>> _getDefaultLineSeries() {
-  return <LineSeries<Expense, int>>[
-    LineSeries<Expense, int>(
+List<LineSeries<Expense, String>> _getDefaultLineSeries() {
+  return <LineSeries<Expense, String>>[
+    LineSeries<Expense, String>(
         animationDuration: 2500,
         dataSource: chartData,
-        xValueMapper: (Expense expense, _) => expense.date.day.toInt(),
+       xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
         yValueMapper: (Expense expense, _) => expense.amount,
         width: 2,
         name: 'Debit',
@@ -115,12 +119,15 @@ SfCartesianChart _buildDefaultLineChart() {
     title: ChartTitle(text: 'Debit vs Credit'),
     legend: Legend(
         overflowMode: LegendItemOverflowMode.wrap),
-    primaryXAxis: NumericAxis(
+    primaryXAxis: CategoryAxis(
+        title: AxisTitle(
+            text: 'Day'
+        ),
         edgeLabelPlacement: EdgeLabelPlacement.shift,
         interval: 2,
         majorGridLines: const MajorGridLines(width: 0)),
     primaryYAxis: NumericAxis(
-        labelFormat: '{value}%',
+        labelFormat: '₹{value}',
         axisLine: const AxisLine(width: 0),
         majorTickLines: const MajorTickLines(color: Colors.transparent)),
     series: _getDefaultLineSeries(),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,7 +18,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Expense> expenseData = [
+  List<Expense> chartData = [
     Expense(DateTime(2023, 3, 22), 25.0),
     Expense(DateTime(2023, 3, 23), 30.0),
     Expense(DateTime(2023, 3, 24), 20.0),
@@ -27,23 +27,44 @@ class _MyAppState extends State<MyApp> {
     Expense(DateTime(2023, 3, 27), 10.0),
     Expense(DateTime(2023, 3, 28), 35.0),
   ];
-
-  List<charts.Series<Expense, DateTime>> _createData() {
-    return [
-      charts.Series<Expense, DateTime>(
-        id: 'expenses',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (Expense expense, _) => expense.date,
-        measureFn: (Expense expense, _) => expense.amount,
-        data: expenseData,
-      )
+  List<LineSeries<Expense, String>> _getDefaultLineSeries() {
+    return <LineSeries<Expense, String>>[
+      LineSeries<Expense, String>(
+          animationDuration: 2500,
+          dataSource: chartData,
+          xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+//         xValueMapper: (Expense expense, _) => expense.date.toString(),
+          yValueMapper: (Expense expense, _) => expense.amount,
+          width: 2,
+          name: 'Debit',
+          markerSettings: const MarkerSettings(isVisible: true)),
     ];
+  }
+  SfCartesianChart _buildDefaultLineChart() {
+    return SfCartesianChart(
+      plotAreaBorderWidth: 0,
+      title: ChartTitle(text: 'Debit vs Credit'),
+      legend: Legend(
+          overflowMode: LegendItemOverflowMode.wrap),
+      primaryXAxis: CategoryAxis(
+          title: AxisTitle(
+              text: 'Day'
+          ),
+          edgeLabelPlacement: EdgeLabelPlacement.shift,
+          interval: 2,
+          majorGridLines: const MajorGridLines(width: 0)),
+      primaryYAxis: NumericAxis(
+          labelFormat: '₹{value}',
+          axisLine: const AxisLine(width: 0),
+          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+      series: _getDefaultLineSeries(),
+      tooltipBehavior: TooltipBehavior(enable: true),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+      return Scaffold(
         appBar: AppBar(
           title: Text('Expenses'),
         ),
@@ -54,33 +75,29 @@ class _MyAppState extends State<MyApp> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(
-                        '${expenseData[index].date.day}/${expenseData[index].date.month}/${expenseData[index].date.year}'),
-                    trailing: Text(expenseData[index].amount.toString()),
+                        '${chartData[index].date.day}/${chartData[index].date.month}/${chartData[index].date.year}'),
+                    trailing: Text(chartData[index].amount.toString()),
                   );
                 },
                 separatorBuilder: (context, index) => Divider(),
-                itemCount: expenseData.length,
+                itemCount: chartData.length,
               ),
             ),
             Container(
               height: 300,
-              child: charts.TimeSeriesChart(
-                _createData(),
-                animate: true,
-              ),
+              child: _buildDefaultLineChart(),
             ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
-              expenseData.add(Expense(DateTime(2023, 3, 29), 30));
-              expenseData.add(Expense(DateTime(2023, 3, 30), 20));
+              chartData.add(Expense(DateTime(2023, 3, 29), 30));
+              chartData.add(Expense(DateTime(2023, 3, 30), 20));
             });
           },
           child: Icon(Icons.add),
         ),
-      ),
     );
   }
 }
