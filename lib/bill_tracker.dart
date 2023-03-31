@@ -7,13 +7,13 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 var logger = Logger();
 
 List<Expense> chartData = [
-  Expense(DateTime(2023, 3, 22), 25.0),
-  Expense(DateTime(2023, 3, 23), 30.0),
-  Expense(DateTime(2023, 3, 24), 20.0),
-  Expense(DateTime(2023, 3, 25), 40.0),
-  Expense(DateTime(2023, 3, 26), 15.0),
-  Expense(DateTime(2023, 3, 27), 10.0),
-  Expense(DateTime(2023, 3, 28), 35.0),
+  Expense(DateTime(2023, 3, 22), 25.0, 40.0),
+  Expense(DateTime(2023, 3, 23), 30.0, 50.0),
+  Expense(DateTime(2023, 3, 24), 20.0, 30.0),
+  Expense(DateTime(2023, 3, 25), 40.0, 20.0),
+  Expense(DateTime(2023, 3, 26), 15.0, 34.0),
+  Expense(DateTime(2023, 3, 27), 10.0, 50.0),
+  Expense(DateTime(2023, 3, 28), 35.0, 10.0),
 ];
 class BillTrackerPage extends StatefulWidget {
   const BillTrackerPage({super.key});
@@ -105,9 +105,17 @@ List<LineSeries<Expense, String>> _getDefaultLineSeries() {
         animationDuration: 2500,
         dataSource: chartData,
        xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
-        yValueMapper: (Expense expense, _) => expense.amount,
+        yValueMapper: (Expense expense, _) => expense.outflow,
         width: 2,
         name: 'Debit',
+        markerSettings: const MarkerSettings(isVisible: true)),
+    LineSeries<Expense, String>(
+        animationDuration: 2500,
+        dataSource: chartData,
+        xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+        yValueMapper: (Expense expense, _) => expense.inflow,
+        width: 2,
+        name: 'Credit',
         markerSettings: const MarkerSettings(isVisible: true)),
   ];
 }
@@ -137,7 +145,8 @@ SfCartesianChart _buildDefaultLineChart() {
 
 class Expense {
   final DateTime date;
-  final double amount;
+  final double outflow;
+  final double inflow;
 
-  Expense(this.date, this.amount);
+  Expense(this.date, this.outflow, this.inflow);
 }

@@ -7,9 +7,9 @@ void main() {
 
 class Expense {
   final DateTime date;
-  final double amount;
+  final double inflow;
 
-  Expense(this.date, this.amount);
+  Expense(this.date, this.inflow);
 }
 
 class MyApp extends StatefulWidget {
@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
           dataSource: chartData,
           xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
 //         xValueMapper: (Expense expense, _) => expense.date.toString(),
-          yValueMapper: (Expense expense, _) => expense.amount,
+          yValueMapper: (Expense expense, _) => expense.inflow,
           width: 2,
           name: 'Debit',
           markerSettings: const MarkerSettings(isVisible: true)),
@@ -76,7 +76,7 @@ class _MyAppState extends State<MyApp> {
                   return ListTile(
                     title: Text(
                         '${chartData[index].date.day}/${chartData[index].date.month}/${chartData[index].date.year}'),
-                    trailing: Text(chartData[index].amount.toString()),
+                    trailing: Text(chartData[index].inflow.toString()),
                   );
                 },
                 separatorBuilder: (context, index) => Divider(),
