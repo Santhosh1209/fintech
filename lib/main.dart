@@ -1,12 +1,15 @@
+import 'package:fintech/model/person_data.dart';
 import 'package:flutter/material.dart';
-//import 'package:flutter/material.dart';
-//import 'package:charts_flutter/flutter.dart' as charts;
-import 'bill_tracker.dart';
-import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'signup.dart';
 import 'forgot_passwd.dart';
 
 void main() {
+  // This is the Service Locator
+  // Using this you can get instance of registered classes anywhere
+  GetIt locator = GetIt.instance;
+  locator.registerSingleton<PersonData>(PersonData());
+
   runApp(const homepage());
 }
 

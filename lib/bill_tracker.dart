@@ -1,20 +1,14 @@
 import 'dart:core';
+import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
+import 'model/person_data.dart';
 import 'lists.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 var logger = Logger();
+var myBaby = GetIt.I.get<PersonData>();
 
-List<Expense> chartData = [
-  Expense(DateTime(2023, 3, 22), 25.0, 40.0),
-  Expense(DateTime(2023, 3, 23), 30.0, 50.0),
-  Expense(DateTime(2023, 3, 24), 20.0, 30.0),
-  Expense(DateTime(2023, 3, 25), 40.0, 20.0),
-  Expense(DateTime(2023, 3, 26), 15.0, 34.0),
-  Expense(DateTime(2023, 3, 27), 10.0, 50.0),
-  Expense(DateTime(2023, 3, 28), 35.0, 10.0),
-];
 class BillTrackerPage extends StatefulWidget {
   const BillTrackerPage({super.key});
 
@@ -103,15 +97,17 @@ List<LineSeries<Expense, String>> _getDefaultLineSeries() {
   return <LineSeries<Expense, String>>[
     LineSeries<Expense, String>(
         animationDuration: 2500,
-        dataSource: chartData,
-       xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+        // dataSource: chartData,
+        dataSource: myBaby.chartData,
+        xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
         yValueMapper: (Expense expense, _) => expense.outflow,
         width: 2,
         name: 'Debit',
         markerSettings: const MarkerSettings(isVisible: true)),
+
     LineSeries<Expense, String>(
         animationDuration: 2500,
-        dataSource: chartData,
+        dataSource: myBaby.chartData,
         xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
         yValueMapper: (Expense expense, _) => expense.inflow,
         width: 2,
@@ -120,7 +116,6 @@ List<LineSeries<Expense, String>> _getDefaultLineSeries() {
   ];
 }
 
-/// Get the cartesian chart with default line series
 SfCartesianChart _buildDefaultLineChart() {
   return SfCartesianChart(
     plotAreaBorderWidth: 0,
@@ -134,19 +129,11 @@ SfCartesianChart _buildDefaultLineChart() {
         edgeLabelPlacement: EdgeLabelPlacement.shift,
         interval: 2,
         majorGridLines: const MajorGridLines(width: 0)),
-    primaryYAxis: NumericAxis(
-        labelFormat: '₹{value}',
-        axisLine: const AxisLine(width: 0),
-        majorTickLines: const MajorTickLines(color: Colors.transparent)),
-    series: _getDefaultLineSeries(),
-    tooltipBehavior: TooltipBehavior(enable: true),
+        primaryYAxis: NumericAxis(
+            labelFormat: '₹{value}',
+            axisLine: const AxisLine(width: 0),
+            majorTickLines: const MajorTickLines(color: Colors.transparent)),
+        series: _getDefaultLineSeries(),
+        tooltipBehavior: TooltipBehavior(enable: true),
   );
-}
-
-class Expense {
-  final DateTime date;
-  final double outflow;
-  final double inflow;
-
-  Expense(this.date, this.outflow, this.inflow);
 }

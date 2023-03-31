@@ -1,37 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import 'model/person_data.dart';
 
 void main() {
   runApp(MyApp());
-}
-
-class Expense {
-  final DateTime date;
-  final double inflow;
-
-  Expense(this.date, this.inflow);
 }
 
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+final myBaby = GetIt.instance<PersonData>();
 
 class _MyAppState extends State<MyApp> {
-  List<Expense> chartData = [
-    Expense(DateTime(2023, 3, 22), 25.0),
-    Expense(DateTime(2023, 3, 23), 30.0),
-    Expense(DateTime(2023, 3, 24), 20.0),
-    Expense(DateTime(2023, 3, 25), 40.0),
-    Expense(DateTime(2023, 3, 26), 15.0),
-    Expense(DateTime(2023, 3, 27), 10.0),
-    Expense(DateTime(2023, 3, 28), 35.0),
-  ];
   List<LineSeries<Expense, String>> _getDefaultLineSeries() {
     return <LineSeries<Expense, String>>[
       LineSeries<Expense, String>(
           animationDuration: 2500,
-          dataSource: chartData,
+          dataSource: myBaby.chartData,
           xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
 //         xValueMapper: (Expense expense, _) => expense.date.toString(),
           yValueMapper: (Expense expense, _) => expense.inflow,
@@ -75,12 +63,12 @@ class _MyAppState extends State<MyApp> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(
-                        '${chartData[index].date.day}/${chartData[index].date.month}/${chartData[index].date.year}'),
-                    trailing: Text(chartData[index].inflow.toString()),
+                        '${myBaby.chartData[index].date.day}/${myBaby.chartData[index].date.month}/${myBaby.chartData[index].date.year}'),
+                    trailing: Text(myBaby.chartData[index].inflow.toString()),
                   );
                 },
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: chartData.length,
+                separatorBuilder: (context, index) => const Divider(),
+                itemCount: myBaby.chartData.length,
               ),
             ),
             Container(
@@ -92,8 +80,8 @@ class _MyAppState extends State<MyApp> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
-              chartData.add(Expense(DateTime(2023, 3, 29), 30));
-              chartData.add(Expense(DateTime(2023, 3, 30), 20));
+              myBaby.addExpense(Expense(DateTime(2023, 3, 29), 30, 50));
+              myBaby.addExpense(Expense(DateTime(2023, 3, 30), 20, 70));
             });
           },
           child: Icon(Icons.add),
