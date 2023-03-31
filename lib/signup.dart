@@ -127,10 +127,10 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),),
                     TextButton(onPressed: ()
                     {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => BillTrackerPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => billtracker()));
                     },
                         child:
-                        Text('Log in here',
+                        const Text('Log in here',
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
