@@ -127,7 +127,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),),
                     TextButton(onPressed: ()
                     {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => billtracker()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => BillTrackerPage()));
                     },
                         child:
                         const Text('Log in here',

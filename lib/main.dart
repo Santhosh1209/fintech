@@ -1,6 +1,9 @@
 import 'package:fintech/model/person_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+// Pages
+import 'bill_tracker.dart';
+import 'login.dart';
 import 'signup.dart';
 import 'forgot_passwd.dart';
 
@@ -118,7 +121,7 @@ class _fintechState extends State<fintech> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ForgotPasswordPage()));
+                          builder: (context) => loginPage()));
                 },
                 style: style,
                 child: Text(
