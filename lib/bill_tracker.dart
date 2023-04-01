@@ -34,7 +34,7 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
                 // true
               },
               child: const Text(
-                'Log in',
+                'You are close to reaching your spending limit for the category of travel. Consider holding off on additional purchases until next month.',
               ),
             ),
           ),
@@ -75,7 +75,9 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
                   onPressed:() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
                   },
-                  child: Text('Tap me')
+                  child: Text('click here to see data on'
+                      ''
+                      ' expenses')
               ),
               const SizedBox(height: 48.0),
               FloatingActionButton(
