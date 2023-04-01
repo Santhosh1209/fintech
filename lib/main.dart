@@ -1,4 +1,5 @@
 import 'package:fintech/model/person_data.dart';
+import 'package:fintech/network/NetworkApi.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 // Pages
@@ -12,6 +13,7 @@ void main() {
   GetIt locator = GetIt.instance;
   locator.registerSingleton<PersonData>(PersonData());
   locator.registerSingleton<LoanDetails>(LoanDetails());
+  locator.registerSingleton<ApiService>(ApiService());
 
   runApp(const homepage());
 }

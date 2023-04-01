@@ -1,15 +1,34 @@
+import 'package:fintech/network/NetworkApi.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'bill_tracker.dart';
+import 'model/user_data.dart';
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
+final myCousin = GetIt.instance<ApiService>();
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  late List<User>? _userModel = [];
+
+  void _getData() async {
+    _userModel = (await myCousin.getUsers())!;
+    Future.delayed(const Duration(seconds: 2)).then((value) => setState(() {}));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   padding: EdgeInsets.all(10.0),
                   child: Center(
                     child: Text(
+                      // 'Please enter your details to continue\n${_userModel![0].phone}',
                       'Please enter your details to continue',
                       textAlign: TextAlign.center,
                       style: TextStyle(
