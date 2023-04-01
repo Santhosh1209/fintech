@@ -1,6 +1,6 @@
 import 'package:fintech/navigation.dart';
 import 'package:flutter/material.dart';
-
+import 'forgot_passwd.dart';
 //import 'package:url_launcher/url_launcher.dart';
 import 'loan_intropage.dart';
 
@@ -101,7 +101,7 @@ class _loginPageState extends State<loginPage> {
             TextButton(
             onPressed: ()
                 {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => LoanTrackingPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NavigationScreen()));
                 },
           child:
                 Text('Log in Here',
@@ -114,7 +114,7 @@ class _loginPageState extends State<loginPage> {
             ),
             TextButton(onPressed: ()
             {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => NavigationScreen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
             },
                 child:
                 Text('Forgot Password',

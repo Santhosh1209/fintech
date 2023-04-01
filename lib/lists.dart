@@ -26,12 +26,21 @@ class _MyAppState extends State<MyApp> {
           width: 2,
           name: 'Debit',
           markerSettings: const MarkerSettings(isVisible: true)),
+      LineSeries<Expense, String>(
+          animationDuration: 2500,
+          dataSource: myBaby.threshold,
+          xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+//         xValueMapper: (Expense expense, _) => expense.date.toString(),
+          yValueMapper: (Expense expense, _) => expense.inflow,
+          width: 2,
+          name: 'Safe Zone',
+          markerSettings: const MarkerSettings(isVisible: false)),
     ];
   }
   SfCartesianChart _buildDefaultLineChart() {
     return SfCartesianChart(
       plotAreaBorderWidth: 0,
-      title: ChartTitle(text: 'Debit vs Credit'),
+      title: ChartTitle(text: 'Debit vs Safe Zone'),
       legend: Legend(
           overflowMode: LegendItemOverflowMode.wrap),
       primaryXAxis: CategoryAxis(

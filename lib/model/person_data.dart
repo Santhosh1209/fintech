@@ -13,6 +13,19 @@ class PersonData with ChangeNotifier {
 
   List<Expense> get chartData => _chartData;
 
+  List<Expense> _threshold = [
+    Expense(DateTime(2023, 3, 22), 25.0, 35),
+    Expense(DateTime(2023, 3, 23), 30.0, 35),
+    Expense(DateTime(2023, 3, 24), 20.0, 35),
+    Expense(DateTime(2023, 3, 25), 40.0, 35),
+    Expense(DateTime(2023, 3, 26), 15.0, 35),
+    Expense(DateTime(2023, 3, 27), 10.0, 35),
+    Expense(DateTime(2023, 3, 28), 35.0, 35),
+  ];
+
+  List<Expense> get threshold => _threshold;
+
+
   void addExpense(Expense expense) {
     _chartData.add(expense);
     notifyListeners(); // notify listeners after modifying the list
