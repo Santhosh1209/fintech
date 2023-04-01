@@ -2,7 +2,6 @@ import 'package:fintech/network/NetworkApi.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'bill_tracker.dart';
-import 'chumma.dart';
 import 'model/user_data.dart';
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);

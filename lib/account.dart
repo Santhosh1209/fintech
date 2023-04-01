@@ -18,11 +18,11 @@ class _MyAccountPageState extends State<MyAccountPage> {
           SizedBox(height: 30),
           CircleAvatar(
             radius: 50,
-            backgroundImage: NetworkImage('https://example.com/user_profile.jpg'),
+            backgroundImage: NetworkImage('https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50'),
           ),
           SizedBox(height: 20),
           Text(
-            'SriRam V',
+            'Sharad',
             style: TextStyle(fontSize: 24),
           ),
           SizedBox(height: 40),

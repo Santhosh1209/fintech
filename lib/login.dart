@@ -1,11 +1,8 @@
-import 'package:fintech/bill_tracker.dart';
+import 'package:fintech/navigation.dart';
 import 'package:flutter/material.dart';
-import 'forgot_passwd.dart';
-import 'account.dart';
+
 //import 'package:url_launcher/url_launcher.dart';
 import 'loan_intropage.dart';
-import 'loan_fillup.dart';
-import 'chumma.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);
@@ -117,7 +114,7 @@ class _loginPageState extends State<loginPage> {
             ),
             TextButton(onPressed: ()
             {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => NavigationScreen()));
             },
                 child:
                 Text('Forgot Password',
