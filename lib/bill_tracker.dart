@@ -75,7 +75,7 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
                   onPressed:() {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
                   },
-                  child: Text('press panra enna')
+                  child: Text('Tap me')
               ),
               const SizedBox(height: 48.0),
               FloatingActionButton(

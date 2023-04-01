@@ -126,8 +126,6 @@ class LoanDetailsPage extends StatelessWidget {
     );
   }
 }
-////////////////////////////////////////
-
 
 List<AreaSeries<LoanData, DateTime>> _getDefaultAreaSeries() {
   return <AreaSeries<LoanData, DateTime>>[
