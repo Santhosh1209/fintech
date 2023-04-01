@@ -143,7 +143,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Text('Already have an account?',
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 14.7,
+                        fontSize: 14.0,
                       ),),
                     TextButton(onPressed: ()
                     {
@@ -154,7 +154,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
-                              fontSize: 14.7
+                              fontSize: 14.0
                           ),)
                     ),
                   ],
