@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'bill_tracker.dart';
+import 'chumma.dart';
 class SignUpPage extends StatefulWidget {
   @override
   _SignUpPageState createState() => _SignUpPageState();
@@ -130,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),),
                     TextButton(onPressed: ()
                     {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => billtracker()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
                     },
                         child:
                         const Text('Log in here',

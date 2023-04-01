@@ -171,3 +171,10 @@ List<Expense> chartData = [
   Expense(DateTime(2023, 3, 27), 10.0, 50.0),
   Expense(DateTime(2023, 3, 28), 35.0, 10.0),
 ];
+
+// NavigationRail(
+// destinations: <NavigationRailDestination>
+// [
+//
+// ]
+// )
