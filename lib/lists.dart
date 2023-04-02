@@ -1,45 +1,67 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+
+import 'model/person_data.dart';
 
 void main() {
   runApp(MyApp());
-}
-
-class Expense {
-  final DateTime date;
-  final double amount;
-
-  Expense(this.date, this.amount);
 }
 
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
+final myBaby = GetIt.instance<PersonData>();
 
 class _MyAppState extends State<MyApp> {
-  List<Expense> expenseData = [
-    Expense(DateTime(2023, 3, 22), 25.0),
-    Expense(DateTime(2023, 3, 23), 30.0),
-    Expense(DateTime(2023, 3, 24), 20.0),
-    Expense(DateTime(2023, 3, 25), 40.0),
-    Expense(DateTime(2023, 3, 26), 15.0),
-    Expense(DateTime(2023, 3, 27), 10.0),
-    Expense(DateTime(2023, 3, 28), 35.0),
-  ];
-
-  List<ChartData> _createData() {
-    List<ChartData> chartData = [];
-    for (Expense expense in expenseData) {
-      chartData.add(ChartData(expense.date, expense.amount));
-    }
-    return chartData;
+  List<LineSeries<Expense, String>> _getDefaultLineSeries() {
+    return <LineSeries<Expense, String>>[
+      LineSeries<Expense, String>(
+          animationDuration: 2500,
+          dataSource: myBaby.chartData,
+          xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+//         xValueMapper: (Expense expense, _) => expense.date.toString(),
+          yValueMapper: (Expense expense, _) => expense.inflow,
+          width: 2,
+          name: 'Debit',
+          markerSettings: const MarkerSettings(isVisible: true)),
+      LineSeries<Expense, String>(
+          animationDuration: 2500,
+          dataSource: myBaby.threshold,
+          xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+//         xValueMapper: (Expense expense, _) => expense.date.toString(),
+          yValueMapper: (Expense expense, _) => expense.inflow,
+          width: 2,
+          name: 'Safe Zone',
+          markerSettings: const MarkerSettings(isVisible: false)),
+    ];
+  }
+  SfCartesianChart _buildDefaultLineChart() {
+    return SfCartesianChart(
+      plotAreaBorderWidth: 0,
+      title: ChartTitle(text: 'Debit vs Safe Zone'),
+      legend: Legend(
+          overflowMode: LegendItemOverflowMode.wrap),
+      primaryXAxis: CategoryAxis(
+          title: AxisTitle(
+              text: 'Day'
+          ),
+          edgeLabelPlacement: EdgeLabelPlacement.shift,
+          interval: 2,
+          majorGridLines: const MajorGridLines(width: 0)),
+      primaryYAxis: NumericAxis(
+          labelFormat: '₹{value}',
+          axisLine: const AxisLine(width: 0),
+          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+      series: _getDefaultLineSeries(),
+      tooltipBehavior: TooltipBehavior(enable: true),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+      return Scaffold(
         appBar: AppBar(
           title: Text('Expenses'),
         ),
@@ -50,71 +72,29 @@ class _MyAppState extends State<MyApp> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     title: Text(
-                        '${expenseData[index].date.day}/${expenseData[index].date.month}/${expenseData[index].date.year}'),
-                    trailing: Text(expenseData[index].amount.toString()),
+                        '${myBaby.chartData[index].date.day}/${myBaby.chartData[index].date.month}/${myBaby.chartData[index].date.year}'),
+                    trailing: Text(myBaby.chartData[index].inflow.toString()),
                   );
                 },
-                separatorBuilder: (context, index) => Divider(),
-                itemCount: expenseData.length,
+                separatorBuilder: (context, index) => const Divider(),
+                itemCount: myBaby.chartData.length,
               ),
             ),
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NewActivity()),
-                );
-              },
-              child: Container(
-                height: 300,
-                child: SfCartesianChart(
-                  primaryXAxis: DateTimeAxis(),
-                  series: <ChartSeries>[
-                    LineSeries<ChartData, DateTime>(
-                      dataSource: _createData(),
-                      xValueMapper: (ChartData chartData, _) =>
-                      chartData.date,
-                      yValueMapper: (ChartData chartData, _) =>
-                      chartData.amount,
-                    )
-                  ],
-                ),
-              ),
+            Container(
+              height: 300,
+              child: _buildDefaultLineChart(),
             ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             setState(() {
-              expenseData.add(Expense(DateTime(2023, 3, 29), 30));
-              expenseData.add(Expense(DateTime(2023, 3, 30), 20));
+              myBaby.addExpense(Expense(DateTime(2023, 3, 29), 30, 50));
+              myBaby.addExpense(Expense(DateTime(2023, 3, 30), 20, 70));
             });
           },
           child: Icon(Icons.add),
         ),
-      ),
-    );
-  }
-}
-
-class ChartData {
-  final DateTime date;
-  final double amount;
-
-  ChartData(this.date, this.amount);
-}
-
-class NewActivity extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('New Activity'),
-      ),
-      body: Center(
-        child: Text('This is a new activity!'),
-      ),
     );
   }
 }

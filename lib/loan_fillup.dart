@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+// import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
 class newLoanPage extends StatefulWidget {
@@ -14,6 +14,32 @@ class _newLoanPageState extends State<newLoanPage> {
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
   String? _selectedPaymentMode;
+
+  Future<void> _selectDateTime() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
+    );
+    if (picked != null) {
+      final TimeOfDay? time = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+      if (time != null) {
+        final DateTime selectedDateTime = DateTime(
+          picked.year,
+          picked.month,
+          picked.day,
+          time.hour,
+          time.minute,
+        );
+        // do something with the selected date and time
+      }
+    }
+  }
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,19 +85,7 @@ class _newLoanPageState extends State<newLoanPage> {
           ),
           Card(
             child: InkWell(
-              onTap: () {
-                DatePicker.showDatePicker(
-                  context,
-                  showTitleActions: true,
-                  onConfirm: (date) {
-                    setState(() {
-                      _selectedDate = date;
-                    });
-                  },
-                  currentTime: DateTime.now(),
-                  locale: LocaleType.en,
-                );
-              },
+              onTap: _selectDateTime,
               child: IgnorePointer(
                 child: TextFormField(
                   decoration: InputDecoration(
@@ -98,19 +112,7 @@ class _newLoanPageState extends State<newLoanPage> {
           ),
           Card(
             child: InkWell(
-              onTap: () {
-                DatePicker.showDatePicker(
-                  context,
-                  showTitleActions: true,
-                  onConfirm: (date) {
-                    setState(() {
-                      _selectedDate = date;
-                    });
-                  },
-                  currentTime: DateTime.now(),
-                  locale: LocaleType.en,
-                );
-              },
+              onTap: _selectDateTime,
               child: IgnorePointer(
                 child: TextFormField(
                   decoration: InputDecoration(

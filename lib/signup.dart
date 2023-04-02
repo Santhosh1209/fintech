@@ -1,17 +1,34 @@
+import 'package:fintech/network/NetworkApi.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:get_it/get_it.dart';
 import 'bill_tracker.dart';
-import 'chumma.dart';
+import 'model/user_data.dart';
 class SignUpPage extends StatefulWidget {
+  const SignUpPage({Key? key}) : super(key: key);
+
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
+final myCousin = GetIt.instance<ApiService>();
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  late List<User>? _userModel = [];
+
+  void _getData() async {
+    _userModel = (await myCousin.getUsers())!;
+    Future.delayed(const Duration(seconds: 2)).then((value) => setState(() {}));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +52,6 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontFamily: 'Poppins',
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -48,13 +64,13 @@ class _SignUpPageState extends State<SignUpPage> {
                   padding: EdgeInsets.all(10.0),
                   child: Center(
                     child: Text(
+                      // 'Please enter your details to continue\n${_userModel![0].phone}',
                       'Please enter your details to continue',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 14.0,
                         fontWeight: FontWeight.normal,
-                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -127,18 +143,18 @@ class _SignUpPageState extends State<SignUpPage> {
                     Text('Already have an account?',
                       style: TextStyle(
                         fontFamily: 'Poppins',
-                        fontSize: 14.7,
+                        fontSize: 14.0,
                       ),),
                     TextButton(onPressed: ()
                     {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => BillTrackerPage()));
                     },
                         child:
                         const Text('Log in here',
                           style: TextStyle(
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.bold,
-                              fontSize: 14.7
+                              fontSize: 14.0
                           ),)
                     ),
                   ],
