@@ -2,6 +2,7 @@ import 'package:fintech/account.dart';
 import 'package:fintech/bill_tracker.dart';
 import 'package:fintech/loan_intropage.dart';
 import 'package:flutter/material.dart';
+import 'package:fintech/PaymentPage.dart';
 
 void main() => runApp(const NavigationScreen());
 
@@ -31,6 +32,7 @@ class _NavigationStateState extends State<NavigationState> {
     MyAccountPage(),
     BillTrackerPage(),
     LoanTrackingPage(),
+    razorpay(),
   ];
 
   @override
@@ -58,6 +60,11 @@ class _NavigationStateState extends State<NavigationState> {
             icon: Icon(Icons.currency_exchange),
             selectedIcon: Icon(Icons.currency_exchange),
             label: "Loans"
+          ),
+          NavigationDestination(
+              icon: Icon(Icons.account_balance),
+              selectedIcon: Icon(Icons.account_balance),
+              label: "Payment"
           ),
         ],
       ),

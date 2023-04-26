@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'bill_tracker.dart';
 import 'model/user_data.dart';
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
   _SignUpPageState createState() => _SignUpPageState();
 }
+
 final myCousin = GetIt.instance<ApiService>();
 
 class _SignUpPageState extends State<SignUpPage> {
@@ -33,25 +35,39 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Expanded(
-                child:
-                Padding(
-                  padding: EdgeInsets.all(10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.lightBlueAccent,
+                        Colors.blueAccent,
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
+                    ),
+                  ),
                   child: Center(
                     child: Text(
                       'Welcome Onboard!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Montserrat',
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -59,50 +75,53 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               Expanded(
                 flex: 2,
-                child:
-                Padding(
-                  padding: EdgeInsets.all(10.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
                   child: Center(
                     child: Text(
-                      // 'Please enter your details to continue\n${_userModel![0].phone}',
                       'Please enter your details to continue',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontFamily: 'Poppins',
+                        fontFamily: 'Montserrat',
                         fontSize: 14.0,
                         fontWeight: FontWeight.normal,
+                        color: Colors.grey,
                       ),
                     ),
                   ),
                 ),
               ),
+              SizedBox(height: 20),
               Expanded(
-                //flex: 2,
-                child: TextFormField(
+                child:
+                TextFormField(
                   controller: _nameController,
+                  obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Name',
                     hintText: 'Enter your name',
                   ),
                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your name';
-                    }
+                    // if (value.isEmpty) {
+                    //   return 'Please enter your password';
+                    // }
                     return null;
                   },
                 ),
               ),
               Expanded(
-                child: TextFormField(
+                child:
+                TextFormField(
                   controller: _emailController,
+                  obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
                   ),
                   validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your email';
-                    }
+                    // if (value.isEmpty) {
+                    //   return 'Please enter your password';
+                    // }
                     return null;
                   },
                 ),

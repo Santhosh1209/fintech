@@ -28,6 +28,9 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  razorpay_flutter: ^1.2.6
+  fluttertoast: ^8.0.8
+  google_sign_in: ^5.0.1
   syncfusion_flutter_charts: ^21.1.37
   flutter_email_sender: ^5.0.0
   pin_code_fields: ^7.3.0

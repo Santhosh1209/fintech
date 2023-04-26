@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'forgot_passwd.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'loan_intropage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+final googleSignIn = GoogleSignIn();
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
