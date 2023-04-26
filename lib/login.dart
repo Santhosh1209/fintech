@@ -3,55 +3,53 @@ import 'package:flutter/material.dart';
 import 'forgot_passwd.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'loan_intropage.dart';
-class loginPage extends StatefulWidget {
-  const loginPage({Key? key}) : super(key: key);
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<loginPage> createState() => _loginPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _loginPageState extends State<loginPage> {
+class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding
-        (padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-          Expanded(
-          child:
-          Padding(
-              padding: EdgeInsets.all(10.0),
-          child: Center(
-            child: Text(
-              'Welcome Back!',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
                 Expanded(
-                  child :Image(
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Center(
+                      child: Text(
+                        'Welcome Back!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Image(
                     image: AssetImage('images/undraw_transfer_money_re_6o1h.png'),
                   ),
                 ),
                 Expanded(
-                  flex: 2,
-                  child:
-                  Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Center(
                       child: Text(
@@ -82,8 +80,7 @@ class _loginPageState extends State<loginPage> {
                   ),
                 ),
                 Expanded(
-                  child:
-                  TextFormField(
+                  child: TextFormField(
                     controller: _passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -98,39 +95,42 @@ class _loginPageState extends State<loginPage> {
                     },
                   ),
                 ),
-      Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextButton(
-            onPressed: ()
-                {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NavigationScreen()));
-                },
-          child:
-                Text('Log in Here',
-                  style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.7
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => NavigationScreen()));
+                        },
+                        child: Text(
+                          'Log in Here',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.7,
+                          ),
+                        ),
+                      ),
+                      Text("    "),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                        },
+                        child: Text(
+                          'Forgot Password',
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14.7,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                )
-            ),
-            TextButton(onPressed: ()
-            {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
-            },
-                child:
-                Text('Forgot Password',
-                  style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.7
-                  ),)
-            )
-      ],
-    ),
-    ),
+                ),
                 Expanded(
                     child: Row
                       (

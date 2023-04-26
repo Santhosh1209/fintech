@@ -123,7 +123,7 @@ class _fintechState extends State<fintech> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => loginPage()));
+                          builder: (context) => LoginPage()));
                 },
                 style: style,
                 child: Text(
