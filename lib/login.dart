@@ -1,9 +1,8 @@
 import 'package:fintech/navigation.dart';
 import 'package:flutter/material.dart';
 import 'forgot_passwd.dart';
-//import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'loan_intropage.dart';
-
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);
 
@@ -44,6 +43,11 @@ class _loginPageState extends State<loginPage> {
           ),
         ),
       ),
+                Expanded(
+                  child :Image(
+                    image: AssetImage('images/undraw_transfer_money_re_6o1h.png'),
+                  ),
+                ),
                 Expanded(
                   flex: 2,
                   child:
