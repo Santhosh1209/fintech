@@ -42,7 +42,18 @@ class _razorpayState extends State<razorpay> {
     _razorpay?.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay?.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
-
+  void deleteCard(String cardType) {
+    print('Deleting $cardType');
+    // TODO: Implement the deletion logic
+  }
+  void editCard(String cardType) {
+    print('Editing $cardType');
+    // TODO: Implement the editing logic
+  }
+  void lockCard(String cardType) {
+    print('Locking $cardType');
+    // TODO: Implement the locking logic
+  }
   void makePayment () async {
     var options = {
       'key': 'rzp_test_5Bgwso33hAs8fR',
@@ -152,11 +163,11 @@ class _razorpayState extends State<razorpay> {
               child: ListTile(
                 title: Text('Debit Card'),
                 subtitle: Text('**** **** **** 1234'),
-                trailing: ElevatedButton(
-                  onPressed: () {
-                    makePayment();
-                  },
-                  child: Text("Pay Now"),
+                trailing: IconButton(
+                    icon: Icon(Icons.lock),
+                    onPressed: () {
+                      lockCard('Debit Card');
+                    },
                 ),
               ),
             ),
@@ -164,11 +175,11 @@ class _razorpayState extends State<razorpay> {
               child: ListTile(
                 title: Text('Credit Card'),
                 subtitle: Text('**** **** **** 5678'),
-                trailing: ElevatedButton(
+                trailing: IconButton(
+                  icon: Icon(Icons.lock),
                   onPressed: () {
-                    makePayment();
+                    lockCard('Credit Card');
                   },
-                  child: Text("Pay Now"),
                 ),
               ),
             ),
@@ -176,11 +187,11 @@ class _razorpayState extends State<razorpay> {
               child: ListTile(
                 title: Text('Visa Card'),
                 subtitle: Text('**** **** **** 9012'),
-                trailing: ElevatedButton(
+                trailing: IconButton(
+                  icon: Icon(Icons.lock),
                   onPressed: () {
-                    makePayment();
+                    lockCard('Visa Card');
                   },
-                  child: Text("Pay Now"),
                 ),
               ),
             ),
@@ -188,6 +199,5 @@ class _razorpayState extends State<razorpay> {
         ),
       ),
     );
-
   }
 }
