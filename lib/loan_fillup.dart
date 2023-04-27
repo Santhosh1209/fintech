@@ -39,8 +39,6 @@ class _newLoanPageState extends State<newLoanPage> {
       }
     }
   }
-
-
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

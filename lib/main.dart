@@ -24,6 +24,7 @@ class homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Fintech',
       home: const Scaffold(
         body: SafeArea(
           child: Padding(

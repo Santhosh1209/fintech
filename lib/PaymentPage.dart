@@ -75,20 +75,23 @@ class _razorpayState extends State<razorpay> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text("Payment Page"),
+          centerTitle: true,
+        ),
         body: ListView(
+          padding: EdgeInsets.all(16.0),
           children: [
-            SafeArea(
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(
-                  "Pending Bills",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+            Text(
+              "Select a bill to pay:",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
               ),
             ),
+            SizedBox(height: 16.0),
             Card(
+              elevation: 4.0,
               child: ListTile(
                 title: Text('Electricity Bill'),
                 subtitle: Text('Rs 2000'),
@@ -100,7 +103,9 @@ class _razorpayState extends State<razorpay> {
                 ),
               ),
             ),
+            SizedBox(height: 16.0),
             Card(
+              elevation: 4.0,
               child: ListTile(
                 title: Text('Gas Bill'),
                 subtitle: Text('Rs 700'),
@@ -112,7 +117,9 @@ class _razorpayState extends State<razorpay> {
                 ),
               ),
             ),
+            SizedBox(height: 16.0),
             Card(
+              elevation: 4.0,
               child: ListTile(
                 title: Text('Wifi Bill'),
                 subtitle: Text('Rs 400'),
@@ -124,7 +131,9 @@ class _razorpayState extends State<razorpay> {
                 ),
               ),
             ),
+            SizedBox(height: 16.0),
             Card(
+              elevation: 4.0,
               child: ListTile(
                 title: Text('Water Tax'),
                 subtitle: Text('Rs 3000'),
@@ -136,7 +145,9 @@ class _razorpayState extends State<razorpay> {
                 ),
               ),
             ),
+            SizedBox(height: 16.0),
             Card(
+              elevation: 4.0,
               child: ListTile(
                 title: Text('Credit Card'),
                 subtitle: Text('Rs 10000'),
@@ -148,7 +159,7 @@ class _razorpayState extends State<razorpay> {
                 ),
               ),
             ),
-            SafeArea(
+    SafeArea(
               child: Container(
                 alignment: Alignment.center,
                 child: Text(
