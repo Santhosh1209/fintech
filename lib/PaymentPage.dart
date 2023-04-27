@@ -45,8 +45,8 @@ class _razorpayState extends State<razorpay> {
 
   void makePayment () async {
     var options = {
-      'key': 'rzp_test_gkCCoVm4Vy4ScI',
-      'amount': 20000, // Rs 200
+      'key': 'rzp_test_5Bgwso33hAs8fR',
+      'amount': 200000, // Rs 2000
       'name': "Sharad",
       'description': 'iphone 69',
       'prefill': {
@@ -66,22 +66,128 @@ class _razorpayState extends State<razorpay> {
       home: Scaffold(
         body: ListView(
           children: [
-            Card(
-              child: ListTile(
-                title: Text('Apple 69 pro max'),
-                subtitle: Text('Sell your kidney and buy it now'),
-                trailing: ElevatedButton(
-                  onPressed: ()
-                  {
-                    makePayment();
-                  },
-                  child: Text("buy now"),
+            SafeArea(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  "Pending Bills",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            )
+            ),
+            Card(
+              child: ListTile(
+                title: Text('Electricity Bill'),
+                subtitle: Text('Rs 2000'),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    makePayment();
+                  },
+                  child: Text("Pay Now"),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text('Gas Bill'),
+                subtitle: Text('Rs 700'),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    makePayment();
+                  },
+                  child: Text("Pay Now"),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text('Wifi Bill'),
+                subtitle: Text('Rs 400'),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    makePayment();
+                  },
+                  child: Text("Pay Now"),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text('Water Tax'),
+                subtitle: Text('Rs 3000'),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    makePayment();
+                  },
+                  child: Text("Pay Now"),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text('Credit Card'),
+                subtitle: Text('Rs 10000'),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    makePayment();
+                  },
+                  child: Text("Pay Now"),
+                ),
+              ),
+            ),
+            SafeArea(
+              child: Container(
+                alignment: Alignment.center,
+                child: Text(
+                  "Your Cards",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text('Debit Card'),
+                subtitle: Text('**** **** **** 1234'),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    makePayment();
+                  },
+                  child: Text("Pay Now"),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text('Credit Card'),
+                subtitle: Text('**** **** **** 5678'),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    makePayment();
+                  },
+                  child: Text("Pay Now"),
+                ),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text('Visa Card'),
+                subtitle: Text('**** **** **** 9012'),
+                trailing: ElevatedButton(
+                  onPressed: () {
+                    makePayment();
+                  },
+                  child: Text("Pay Now"),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
+
   }
 }
