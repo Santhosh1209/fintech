@@ -134,45 +134,45 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                Expanded(
-                    child: Row
-                      (
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                      children: [
-                        TextButton(
-                          onPressed: ()
-                    {
-                      //
-                    },
-                          child: Image(
-                              image: AssetImage('images/google.png'),
-                          height: 40,
-                              width: 30,),
-                        ),
-                        TextButton(
-                          onPressed: ()
-                          {
-                            //
-                          },
-                          child: Image(
-                              image: AssetImage('images/facebook-app-symbol.png'),
-                          height: 40,
-                              width: 30,),
-                        ),
-                        TextButton(
-                          onPressed: ()
-                          {
-                            //
-                          },
-                          child: Image(
-                              image: AssetImage('images/twitter-sign.png'),
-                          height: 40,
-                              width: 30,),
-                        ),
-                      ],
-                    )
-                )
+                // Expanded(
+                //     child: Row
+                //       (
+                //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                //
+                //       children: [
+                //         TextButton(
+                //           onPressed: ()
+                //     {
+                //       //
+                //     },
+                //           child: Image(
+                //               image: AssetImage('images/google.png'),
+                //           height: 40,
+                //               width: 30,),
+                //         ),
+                //         TextButton(
+                //           onPressed: ()
+                //           {
+                //             //
+                //           },
+                //           child: Image(
+                //               image: AssetImage('images/facebook-app-symbol.png'),
+                //           height: 40,
+                //               width: 30,),
+                //         ),
+                //         TextButton(
+                //           onPressed: ()
+                //           {
+                //             //
+                //           },
+                //           child: Image(
+                //               image: AssetImage('images/twitter-sign.png'),
+                //           height: 40,
+                //               width: 30,),
+                //         ),
+                //       ],
+                //     )
+                // )
               ],
           ),
         ),

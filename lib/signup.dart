@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'bill_tracker.dart';
 import 'model/user_data.dart';
+import 'account.dart';
+import 'navigation.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -12,6 +16,9 @@ class SignUpPage extends StatefulWidget {
 }
 
 final myCousin = GetIt.instance<ApiService>();
+String name = "";
+String email = "";
+String password = "";
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
@@ -24,12 +31,6 @@ class _SignUpPageState extends State<SignUpPage> {
   void _getData() async {
     _userModel = (await myCousin.getUsers())!;
     Future.delayed(const Duration(seconds: 2)).then((value) => setState(() {}));
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _getData();
   }
 
   @override
@@ -149,10 +150,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     // Perform sign-up action
-                    String name = _nameController.text;
-                    String email = _emailController.text;
-                    String password = _passwordController.text;
+                    name = _nameController.text;
+                    email = _emailController.text;
+                    password = _passwordController.text;
                     print('Name: $name\nEmail: $email\nPassword: $password');
+                    postData();
                   }
                 },
               ),
@@ -164,17 +166,21 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontFamily: 'Poppins',
                         fontSize: 14.0,
                       ),),
-                    TextButton(onPressed: ()
-                    {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => BillTrackerPage()));
-                    },
-                        child:
-                        const Text('Log in here',
-                          style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14.0
-                          ),)
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NavigationScreen()),
+                        );
+                      },
+                      child: Text(
+                        'Log in here',
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14.0,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -184,5 +190,34 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       ),
     );
+  }
+}
+
+void postData() async {
+  print("Vanakam");
+  var url = Uri.parse('https://fintech-rfnl.onrender.com/api/user/');
+  var headers = {'Content-Type': 'application/json'};
+
+  var payload = {'userName': name, 'email': email, 'password': password};
+
+  try {
+    print("Vanakam2");
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: json.encode(payload),
+    );
+
+    if (response.statusCode == 201) {
+      print("Vanakam3");
+      var data = json.decode(response.body);
+      print('POST response: $data');
+    } else {
+      print("Vanakam4");
+      throw Exception('Failed to make POST request');
+    }
+  } catch (error) {
+    print("Vanakam5");
+    print('Error making POST request: $error');
   }
 }

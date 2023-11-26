@@ -93,7 +93,7 @@ class _LoanTrackingPageState extends State<LoanTrackingPage> {
         child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => newLoanPage()));
+              context, MaterialPageRoute(builder: (context) => NewLoanPage()));
         },
       ),
     );
