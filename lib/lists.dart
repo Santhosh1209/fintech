@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-
 import 'model/person_data.dart';
+import 'network/adding_bill_item.dart';
 
 void main() {
   runApp(MyApp());
@@ -86,15 +86,25 @@ class _MyAppState extends State<MyApp> {
             ),
           ],
         ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     setState(() {
+        //       myBaby.addExpense(Expense(DateTime(2023, 3, 29), 30, 50));
+        //       myBaby.addExpense(Expense(DateTime(2023, 3, 30), 20, 70));
+        //     });
+        //   },
+        //   child: Icon(Icons.add),
+        // ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              myBaby.addExpense(Expense(DateTime(2023, 3, 29), 30, 50));
-              myBaby.addExpense(Expense(DateTime(2023, 3, 30), 20, 70));
-            });
+          onPressed: (){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => AddingBillItemPage()),
+            );
           },
           child: Icon(Icons.add),
         ),
+
     );
   }
 }
