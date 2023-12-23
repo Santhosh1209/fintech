@@ -2,25 +2,109 @@ import 'package:flutter/cupertino.dart';
 
 class PersonData with ChangeNotifier {
   List<Expense> _chartData = [
-    Expense(DateTime(2023, 3, 22), 25.0, 40.0),
-    Expense(DateTime(2023, 3, 23), 30.0, 50.0),
-    Expense(DateTime(2023, 3, 24), 20.0, 30.0),
-    Expense(DateTime(2023, 3, 25), 40.0, 20.0),
-    Expense(DateTime(2023, 3, 26), 15.0, 34.0),
-    Expense(DateTime(2023, 3, 27), 10.0, 50.0),
-    Expense(DateTime(2023, 3, 28), 35.0, 10.0),
+    Expense(
+      date: DateTime(2023, 3, 22),
+      inflow: 25.0,
+      outflow: 40.0,
+      amount: 25.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 23),
+      outflow: 30.0,
+      inflow: 50.0,
+      amount: 50.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 24),
+      outflow: 20.0,
+      inflow: 30.0,
+      amount: 30.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 25),
+      outflow: 40.0,
+      inflow: 20.0,
+      amount: 20.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 26),
+      outflow: 15.0,
+      inflow: 34.0,
+      amount: 34.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 27),
+      outflow: 10.0,
+      inflow: 50.0,
+      amount: 50.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 28),
+      outflow: 35.0,
+      inflow: 10.0,
+      amount: 10.0,
+      classification: "Some classification",
+    )
   ];
 
   List<Expense> get chartData => _chartData;
 
   List<Expense> _threshold = [
-    Expense(DateTime(2023, 3, 22), 25.0, 35),
-    Expense(DateTime(2023, 3, 23), 30.0, 35),
-    Expense(DateTime(2023, 3, 24), 20.0, 35),
-    Expense(DateTime(2023, 3, 25), 40.0, 35),
-    Expense(DateTime(2023, 3, 26), 15.0, 35),
-    Expense(DateTime(2023, 3, 27), 10.0, 35),
-    Expense(DateTime(2023, 3, 28), 35.0, 35),
+    Expense(
+      date: DateTime(2023, 3, 22),
+      inflow: 25.0,
+      outflow: 35.0,
+      amount: 35.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 23),
+      outflow: 30.0,
+      inflow: 35.0,
+      amount: 35.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 24),
+      outflow: 20.0,
+      inflow: 35.0,
+      amount: 35.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 25),
+      outflow: 40.0,
+      inflow: 35.0,
+      amount: 35.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 26),
+      outflow: 15.0,
+      inflow: 35.0,
+      amount: 35.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 27),
+      outflow: 10.0,
+      inflow: 35.0,
+      amount: 35.0,
+      classification: "Some classification",
+    ),
+    Expense(
+      date: DateTime(2023, 3, 28),
+      outflow: 35.0,
+      inflow: 35.0,
+      amount: 35.0,
+      classification: "Some classification",
+    )
   ];
 
   List<Expense> get threshold => _threshold;
@@ -34,8 +118,16 @@ class PersonData with ChangeNotifier {
 
 class Expense {
   final DateTime date;
-  final double outflow;
   final double inflow;
+  final double outflow;
+  final double amount;
+  final String classification;
 
-  Expense(this.date, this.outflow, this.inflow);
+  Expense({
+    required this.date,
+    required this.inflow,
+    required this.outflow,
+    required this.amount,
+    required this.classification,
+  });
 }

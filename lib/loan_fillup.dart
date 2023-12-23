@@ -215,35 +215,40 @@ final TextEditingController _amountController = TextEditingController();
 final TextEditingController _startDateController = TextEditingController();
 final TextEditingController _endDateController = TextEditingController();
 String? _selectedPaymentMode;
+String? _selectedLoanType;
+String? _selectedInterestRate; // Added variable for selected interest rate
 String accessToken =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NjMwNDBiY2RkZjQ4NWRiYzlhNDNjYSIsImlhdCI6MTcwMDk4NzkxNSwiZXhwIjoxNzAxMjQ3MTE1fQ.PltdbntLDLvI4ItZsuW9NmcITaO3qUl8cC9YuZkkL3Q';
 
 class _NewLoanPageState extends State<NewLoanPage> {
+  List<String> _loanTypes = ['Home Loan', 'Business Loan', 'Education Loan', 'Property Loan', 'Gold Loan'];
+  List<String> _interestRates = ['5%', '8%', '10%', '12%', '15%'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add a new loan'),
       ),
-      body: Column(
+      body: ListView(
+        padding: const EdgeInsets.all(10.0),
         children: [
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Center(
-                child: Text(
-                  'Enter the following details to create a new loan',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 12.0,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.black,
-                  ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Center(
+              child: Text(
+                'Enter the following details to create a new loan',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.black,
                 ),
               ),
             ),
           ),
+          SizedBox(height: 10.0),
           Card(
             child: TextFormField(
               decoration: InputDecoration(
@@ -261,7 +266,7 @@ class _NewLoanPageState extends State<NewLoanPage> {
               },
             ),
           ),
-          Spacer(),
+          SizedBox(height: 10.0),
           Card(
             child: TextFormField(
               decoration: InputDecoration(
@@ -280,7 +285,7 @@ class _NewLoanPageState extends State<NewLoanPage> {
               },
             ),
           ),
-          Spacer(),
+          SizedBox(height: 10.0),
           Card(
             child: TextFormField(
               decoration: InputDecoration(
@@ -299,7 +304,7 @@ class _NewLoanPageState extends State<NewLoanPage> {
               },
             ),
           ),
-          Spacer(),
+          SizedBox(height: 10.0),
           Card(
             child: DropdownButtonFormField<String>(
               value: _selectedPaymentMode,
@@ -327,7 +332,63 @@ class _NewLoanPageState extends State<NewLoanPage> {
               }).toList(),
             ),
           ),
-          Spacer(),
+          SizedBox(height: 10.0),
+          Card(
+            child: DropdownButtonFormField<String>(
+              value: _selectedLoanType,
+              onChanged: (value) {
+                setState(() {
+                  _selectedLoanType = value;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Loan Type',
+                hintText: 'Select loan type',
+              ),
+              validator: (value) {
+                if (_selectedLoanType == null) {
+                  return 'Please select loan type';
+                }
+                return null;
+              },
+              items: _loanTypes
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          ),
+          SizedBox(height: 10.0),
+          Card(
+            child: DropdownButtonFormField<String>(
+              value: _selectedInterestRate,
+              onChanged: (value) {
+                setState(() {
+                  _selectedInterestRate = value;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Interest Rate',
+                hintText: 'Select interest rate',
+              ),
+              validator: (value) {
+                if (_selectedInterestRate == null) {
+                  return 'Please select interest rate';
+                }
+                return null;
+              },
+              items: _interestRates
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          ),
+          SizedBox(height: 10.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -363,6 +424,7 @@ class _NewLoanPageState extends State<NewLoanPage> {
   }
 }
 
+// backend integration
 void postData_loan() async {
   print("Vanakam");
   var url = Uri.parse('https://fintech-rfnl.onrender.com/api/loan/');

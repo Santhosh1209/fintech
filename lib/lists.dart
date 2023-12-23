@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
           dataSource: myBaby.threshold,
           xValueMapper: (Expense expense, _) =>
           '${expense.date.day}/${expense.date.month}',
-          yValueMapper: (Expense expense, _) => expense.inflow,
+          yValueMapper: (Expense expense, _) => expense.amount,
           width: 2,
           name: 'Safe Zone',
           markerSettings: const MarkerSettings(isVisible: false)),
@@ -59,11 +59,19 @@ class _MyAppState extends State<MyApp> {
   }
 
   // Function to handle editing an expense
-  void _editExpense(Expense expense) {
-    // Implement the edit logic here
-    // You can navigate to an edit screen or show a dialog to edit the selected item.
-    // For example:
-    print('Editing expense: ${expense.inflow}');
+  void _editExpense(BuildContext context, Expense expense) {
+    // Navigate to the AddingBillItemPage with the selected expense data
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddingBillItemPage(
+          // Pass the expense data to the AddingBillItemPage
+          initialAmount: expense.amount.toString(),
+          initialDate: expense.date.toString(), // Adjust the format as needed
+          initialClassification: expense.classification,
+        ),
+      ),
+    );
   }
 
   @override
@@ -90,7 +98,7 @@ class _MyAppState extends State<MyApp> {
                           IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () {
-                              _editExpense(myBaby.chartData[index]);
+                              _editExpense(context,myBaby.chartData[index]);
                             },
                           ),
                         ],

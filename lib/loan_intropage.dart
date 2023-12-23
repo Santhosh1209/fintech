@@ -1,11 +1,26 @@
-import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'loan_fillup.dart';
 import 'model/loan_data.dart';
+import 'About_loan.dart';
+
+class LoanInfo {
+  final String name;
+  final String amount;
+  final String type;
+  final String rate;
+  final String duration;
+
+  LoanInfo({
+    required this.name,
+    required this.amount,
+    required this.type,
+    required this.rate,
+    required this.duration,
+  });
+}
 
 var myLoan = GetIt.I.get<LoanDetails>();
 
@@ -17,15 +32,14 @@ class LoanTrackingPage extends StatefulWidget {
 }
 
 class _LoanTrackingPageState extends State<LoanTrackingPage> {
-  // Add your state variables here
   bool _isEditing = false;
-  List<String> _loanNames = [
-    "Business Loan",
-    "Education Loan",
-    "Property Loan",
+
+  List<LoanInfo> _loanInfoList = [
+    LoanInfo(name: "Business Loan", amount: '500000', type: 'Business Loan', rate: '5%', duration: '3 years'),
+    LoanInfo(name: "Education Loan", amount: '80000', type: 'Education Loan', rate: '8%', duration: '2 years'),
+    LoanInfo(name: "Property Loan", amount: '175000', type: 'Property Loan', rate: '10%', duration: '5 years'),
+    // Add more loans as needed
   ];
-  List<String> _amount = ['500000', '80000', '175000'];
-  //List<String> _percentage = ['60%','75%','85%'];
 
   @override
   Widget build(BuildContext context) {
@@ -44,45 +58,49 @@ class _LoanTrackingPageState extends State<LoanTrackingPage> {
         ],
       ),
       body: ListView.builder(
-        itemCount: _loanNames.length,
+        itemCount: _loanInfoList.length,
         itemBuilder: (BuildContext context, int index) {
+          var loan = _loanInfoList[index];
           return Card(
             child: Column(
               children: [
                 ListTile(
-                  title: Text(_loanNames[index]),
+                  title: Text(loan.name),
                   trailing: _isEditing
                       ? IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            setState(() {
-                              _loanNames.removeAt(index);
-                            });
-                          },
-                        )
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      setState(() {
+                        _loanInfoList.removeAt(index);
+                      });
+                    },
+                  )
                       : IconButton(
-                          icon: Icon(Icons.arrow_forward),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoanDetailsPage(
-                                  loanName: _loanNames[index],
-                                  loanAmount: _amount[index],
-                                ),
-                              ),
-                            );
-                          },
+                    icon: Icon(Icons.arrow_forward),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AboutLoanPage(
+                            loanName: loan.name,
+                            loanAmount: loan.amount,
+                            loanType: loan.type,
+                            interestRate: loan.rate,
+                            duration: loan.duration,
+                          ),
                         ),
+                      );
+                    },
+                  ),
                 ),
                 Card(
                   child: Row(
                     children: [
-                    Text('Total Amount : '),
-                    Text(_amount[index]),
-                    //Text(_percentage[index])
-                  ],
-                )),
+                      Text('Total Amount : '),
+                      Text(loan.amount),
+                    ],
+                  ),
+                ),
                 _buildDefaultAreaChart(),
               ],
             ),
@@ -98,71 +116,44 @@ class _LoanTrackingPageState extends State<LoanTrackingPage> {
       ),
     );
   }
-}
 
-class LoanDetailsPage extends StatelessWidget {
-  final String loanName;
-  final String loanAmount;
-
-  const LoanDetailsPage(
-      {Key? key, required this.loanName, required this.loanAmount})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(loanName),
+  List<AreaSeries<LoanData, DateTime>> _getDefaultAreaSeries() {
+    return <AreaSeries<LoanData, DateTime>>[
+      AreaSeries<LoanData, DateTime>(
+        dataSource: myLoan.loanDueData!,
+        opacity: 0.7,
+        name: 'Due',
+        xValueMapper: (LoanData sales, _) => sales.date,
+        yValueMapper: (LoanData sales, _) => sales.amount,
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Text("Loan details for $loanName"),
-            SizedBox(height: 16),
-            Text("Loan amount: $loanAmount"),
-          ],
-        ),
-      ),
+      AreaSeries<LoanData, DateTime>(
+        dataSource: myLoan.loanPaidData!,
+        opacity: 0.7,
+        name: 'Paid',
+        xValueMapper: (LoanData sales, _) => sales.date,
+        yValueMapper: (LoanData sales, _) => sales.amount,
+      )
+    ];
+  }
+
+  SfCartesianChart _buildDefaultAreaChart() {
+    return SfCartesianChart(
+      legend: Legend(opacity: 0.7),
+      plotAreaBorderWidth: 0,
+      primaryXAxis: DateTimeAxis(
+          dateFormat: DateFormat.y(),
+          interval: 1,
+          intervalType: DateTimeIntervalType.years,
+          majorGridLines: const MajorGridLines(width: 0),
+          edgeLabelPlacement: EdgeLabelPlacement.shift),
+      primaryYAxis: NumericAxis(
+          labelFormat: '{value}M',
+          title: AxisTitle(text: 'Paid in millions'),
+          interval: 1,
+          axisLine: const AxisLine(width: 0),
+          majorTickLines: const MajorTickLines(size: 0)),
+      series: _getDefaultAreaSeries(),
+      tooltipBehavior: TooltipBehavior(enable: true),
     );
   }
-}
-
-List<AreaSeries<LoanData, DateTime>> _getDefaultAreaSeries() {
-  return <AreaSeries<LoanData, DateTime>>[
-    AreaSeries<LoanData, DateTime>(
-      dataSource: myLoan.loanDueData!,
-      opacity: 0.7,
-      name: 'Due',
-      xValueMapper: (LoanData sales, _) => sales.date,
-      yValueMapper: (LoanData sales, _) => sales.amount,
-    ),
-    AreaSeries<LoanData, DateTime>(
-      dataSource: myLoan.loanPaidData!,
-      opacity: 0.7,
-      name: 'Paid',
-      xValueMapper: (LoanData sales, _) => sales.date,
-      yValueMapper: (LoanData sales, _) => sales.amount,
-    )
-  ];
-}
-
-SfCartesianChart _buildDefaultAreaChart() {
-  return SfCartesianChart(
-    legend: Legend(opacity: 0.7),
-    plotAreaBorderWidth: 0,
-    primaryXAxis: DateTimeAxis(
-        dateFormat: DateFormat.y(),
-        interval: 1,
-        intervalType: DateTimeIntervalType.years,
-        majorGridLines: const MajorGridLines(width: 0),
-        edgeLabelPlacement: EdgeLabelPlacement.shift),
-    primaryYAxis: NumericAxis(
-        labelFormat: '{value}M',
-        title: AxisTitle(text: 'Paid in millions'),
-        interval: 1,
-        axisLine: const AxisLine(width: 0),
-        majorTickLines: const MajorTickLines(size: 0)),
-    series: _getDefaultAreaSeries(),
-    tooltipBehavior: TooltipBehavior(enable: true),
-  );
 }

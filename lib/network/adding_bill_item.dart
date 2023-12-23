@@ -3,6 +3,16 @@ import 'package:get_it/get_it.dart';
 import '../model/person_data.dart';
 
 class AddingBillItemPage extends StatefulWidget {
+  final String? initialAmount;
+  final String? initialDate;
+  final String? initialClassification;
+
+  const AddingBillItemPage({
+    Key? key,
+    this.initialAmount,
+    this.initialDate,
+    this.initialClassification,
+  }) : super(key: key);
   @override
   _AddingBillItemPageState createState() => _AddingBillItemPageState();
 }
@@ -15,6 +25,14 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
   TextEditingController classificationController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    // Here, we are fixing the initial values if they're provided
+    amountController.text = widget.initialAmount ?? '';
+    dateController.text = widget.initialDate ?? '';
+    classificationController.text = widget.initialClassification ?? '';
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
