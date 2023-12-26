@@ -8,7 +8,7 @@ class AddingBillItemPage extends StatefulWidget {
   final String? initialAmount;
   final String? initialDate;
   final String? initialClassification;
-  final Function(double, String, String) onSave;
+  final Function(double, double, String, String) onSave;
 
   const AddingBillItemPage({
     Key? key,
@@ -129,7 +129,9 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
       }
 
       double debit = double.parse(amountController.text);
-      double credit = Random().nextBool() ? debit + 10.0 : debit - 10.0; // Adjust as needed
+      Random random = Random();
+      int x = random.nextInt(2);
+      double credit = (x == 0) ? debit + 10.0 : debit - 10.0;
       String date = dateController.text;
       String classification = classificationController.text;
 
@@ -141,7 +143,7 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
       }
 
       // Call the onSave callback
-      widget.onSave(debit, parsedDate.toString(), classification);
+      widget.onSave(debit, credit, parsedDate.toString(), classification);
       // Navigate back to the previous screen
       Navigator.pop(context);
     } catch (e) {

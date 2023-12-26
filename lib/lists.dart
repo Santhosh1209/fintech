@@ -72,7 +72,7 @@ class _MyAppState extends State<MyApp> {
           initialAmount: expense.amount.toString(),
           initialDate: expense.date.toString(),
           initialClassification: expense.classification,
-          onSave: (newDebit, newDate, newClassification) {
+          onSave: (newDebit, newCredit, newDate, newClassification) {
             // Find the index of the expense in the list
             int index = myBaby.chartData.indexOf(expense);
 
@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
             myBaby.chartData[index] = Expense(
               date: DateTime.parse(newDate),
               inflow: newDebit,
-              outflow: expense.outflow, // Keep the original outflow value
+              outflow: newCredit,
               amount: newDebit,
               classification: newClassification,
             );
@@ -148,12 +148,12 @@ class _MyAppState extends State<MyApp> {
             context,
             MaterialPageRoute(
               builder: (context) => AddingBillItemPage(
-                onSave: (newAmount, newDate, newClassification) {
+                onSave: (newAmount, newCredit, newDate, newClassification) {
                   setState(() {
                     myBaby.addExpense(Expense(
                       date: DateTime.parse(newDate),
                       inflow: newAmount,
-                      outflow: newAmount >= 0 ? 0.0 : -newAmount,
+                      outflow: newCredit,
                       amount: newAmount,
                       classification: newClassification,
                     ));
