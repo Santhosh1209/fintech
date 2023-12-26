@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
 
 
   void _editExpense(BuildContext context, Expense expense) {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => AddingBillItemPage(
@@ -149,14 +149,11 @@ class _MyAppState extends State<MyApp> {
             MaterialPageRoute(
               builder: (context) => AddingBillItemPage(
                 onSave: (newAmount, newDate, newClassification) {
-                  // Handle the save logic here
-                  // You can use newAmount, newDate, newClassification
-                  // to update your data.
                   setState(() {
                     myBaby.addExpense(Expense(
                       date: DateTime.parse(newDate),
                       inflow: newAmount,
-                      outflow: newAmount >= 0 ? 0.0 : -newAmount, // Set the outflow accordingly
+                      outflow: newAmount >= 0 ? 0.0 : -newAmount,
                       amount: newAmount,
                       classification: newClassification,
                     ));
@@ -165,6 +162,7 @@ class _MyAppState extends State<MyApp> {
                   // Navigate back to the list of values page
                   Navigator.pop(context);
                 },
+
               ),
             ),
           );
