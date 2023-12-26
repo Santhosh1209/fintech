@@ -1,0 +1,274 @@
+[33mcommit d274094e591f9d0f040f094afef4d822f9ef3c31[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Sat Dec 23 11:17:36 2023 +0530
+
+    editing bills + loan about page
+
+[33mcommit 383c93750a21d6619be1925520ae890529e268bb[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Fri Dec 22 14:49:12 2023 +0530
+
+    added logout + help pages
+
+[33mcommit 733b56e9d9242b403f8d6d0cea6a6d5d31e2fa03[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Fri Dec 22 13:50:05 2023 +0530
+
+    added edit bill option
+
+[33mcommit e3e58da46c7f87d98f7766ded5e60a1d8b08b490[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Mon Dec 4 16:26:31 2023 +0530
+
+    Added page for manually entering bill amount
+
+[33mcommit b7e74e26d859fcfe7036ea624531fb22478e9702[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Sun Nov 26 17:57:53 2023 +0530
+
+    integrated signup page and loan page with backend API
+
+[33mcommit d80f1aaea83d4ea18deba575a16e5df88f5c6a88[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Thu Apr 27 11:32:33 2023 +0530
+
+    Payment Page UI update
+
+[33mcommit a3c7c31c50a7a376b7c75cdc672b6cc3e053990c[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Thu Apr 27 09:04:38 2023 +0530
+
+    Payment - Your Cards
+
+[33mcommit 8fc79bebe5e538da411fa04e83544e004c7e6078[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Thu Apr 27 08:53:55 2023 +0530
+
+    Payment - Pending Bills
+
+[33mcommit 8e2227c324b24dcf6345259172cd0511c42d6040[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Thu Apr 27 05:21:26 2023 +0530
+
+    razerpay API integration
+
+[33mcommit ce641961ad5ad4a243d25faf3489de179197d21d[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Wed Apr 26 22:30:33 2023 +0530
+
+    Ui update part 2 - LOGIN PAGE
+
+[33mcommit 3bf54741af51340f6665833b6356c5a0b71c8b08[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Wed Apr 26 19:41:56 2023 +0530
+
+    Ui update part 1
+
+[33mcommit 3c40b2e89ec5bf74665d68a102945a479abc87fa[m
+Merge: 9dc2485 2062788
+Author: nijuyonkadesu <85601344+nijuyonkadesu@users.noreply.github.com>
+Date:   Sun Apr 2 20:26:26 2023 +0530
+
+    Merge pull request #1 from Santhosh1209/syncfusion
+    
+    UI and Network Changes
+
+[33mcommit 2062788c09282ddfdfd34ea83bb4e446d96e6241[m[33m ([m[1;31morigin/syncfusion[m[33m, [m[1;31morigin/pre_final[m[33m)[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Sat Apr 1 10:19:38 2023 +0530
+
+    Added Safezone line
+
+[33mcommit 1190af4821a4cf5e7ea202e4c339a7ac2f660836[m
+Merge: 394e89d 21b8262
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Sat Apr 1 09:02:07 2023 +0530
+
+    Merge remote-tracking branch 'origin/pre_final' into syncfusion
+    
+    # Conflicts:
+    #       lib/bill_tracker.dart
+
+[33mcommit 394e89da2d506b1700c8d819d5a483e78c30045a[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Sat Apr 1 09:00:09 2023 +0530
+
+    Navigation bar
+
+[33mcommit 21b82624d132db6f790cc1747d528b3cb5db3e81[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Sat Apr 1 08:59:43 2023 +0530
+
+    added suggestions to the bottom sheet
+
+[33mcommit cfe66f0612b65007100ac8483c5e7f5da413b6e8[m
+Merge: e886604 9dc2485
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Sat Apr 1 08:34:21 2023 +0530
+
+    Merge branch 'master' into syncfusion
+    
+    # Conflicts:
+    #       lib/bill_tracker.dart
+    #       lib/loan_intropage.dart
+    #       lib/signup.dart
+    #       pubspec.lock
+    #       pubspec.yaml
+
+[33mcommit 9dc24857751c9d5c6ccb6b32da8a1e9f95a48a39[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Sat Apr 1 08:07:49 2023 +0530
+
+    added rail
+
+[33mcommit e88660472688f75cd741bf6dc35aa55d4a8d1f22[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Sat Apr 1 07:07:31 2023 +0530
+
+    sample RestAPI using dummy json
+
+[33mcommit e13b3b7876693f03ef80fcb8563a7f5881275b21[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Sat Apr 1 04:44:55 2023 +0530
+
+    Singleton Loan Data
+
+[33mcommit dc0c925043b7832a8232759c650a9d4b9d7d4ac1[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Sat Apr 1 04:19:51 2023 +0530
+
+    Graphs in Loan
+
+[33mcommit 15be4ab74a3e8ba7a513f4d4e5bdfdab35cee9a3[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Sat Apr 1 02:45:00 2023 +0530
+
+    nitty gritty merge errors, different date time picker
+
+[33mcommit 9027e11d4bbca76a044991c99554e34593f9eb94[m
+Merge: 8ead2da 32bc1ab
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Sat Apr 1 00:34:03 2023 +0530
+
+    Merge branch 'master' into syncfusion
+    
+    # Conflicts:
+    #       lib/bill_tracker.dart
+    #       lib/lists.dart
+    #       lib/main.dart
+    #       pubspec.lock
+    #       pubspec.yaml
+
+[33mcommit 8ead2dae4e046b815ea3b6de561b1fb78c2f66d8[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Sat Apr 1 00:18:56 2023 +0530
+
+    Single Source of information
+
+[33mcommit 32bc1ab59fc4004f80952500b9ce6fbe61932cc5[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Sat Apr 1 00:17:31 2023 +0530
+
+    added 'my account' page
+
+[33mcommit f222302f5f203f60f101e612f3fe12770862cf09[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Sat Apr 1 00:16:21 2023 +0530
+
+    added 'my account' page
+
+[33mcommit 2371204760ecd0d1365b00fb51aedefb5aadeae6[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Fri Mar 31 23:02:50 2023 +0530
+
+    displays loan amount in loan details page
+
+[33mcommit bd8df1ed0d2ba32d0c1c43a8ad6cf0ad642b8db7[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Fri Mar 31 18:22:58 2023 +0530
+
+    made login page,started making loan tracker
+
+[33mcommit 32b5956444c54b755550e385b574618e099dce3d[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Fri Mar 31 16:42:39 2023 +0530
+
+    add credit graph
+
+[33mcommit 14ca0e54ba4c839797a7e42949244994e2186ddc[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Fri Mar 31 15:14:55 2023 +0530
+
+    axis customization
+
+[33mcommit de01e2cd6b9c7a6f93cfa4d0334702590de6d404[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Fri Mar 31 11:55:18 2023 +0530
+
+    added login page
+
+[33mcommit 2693749dc5dad913afea7a928c830f72a84390aa[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Thu Mar 30 21:16:11 2023 +0530
+
+    bill tracker page - new package used
+
+[33mcommit a00cbd887722f33ac8f30b3c5a9e50755be1df06[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Thu Mar 30 21:03:05 2023 +0530
+
+    new graph
+
+[33mcommit 193488c90e62cca7e76dce99360850be8b30083a[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Thu Mar 30 20:28:11 2023 +0530
+
+    fix theme
+
+[33mcommit 927643fc70ffb95eea8d143b8c2e93af47f54c37[m
+Merge: fd25c17 9700539
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Thu Mar 30 19:44:59 2023 +0530
+
+    Merge branch 'dev_loan' into syncfusion
+    
+    # Conflicts:
+    #       lib/bill_tracker.dart
+    #       lib/main.dart
+    #       pubspec.lock
+
+[33mcommit fd25c17b380cfb4154e3397d53491263bcd1e19a[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Thu Mar 30 18:37:32 2023 +0530
+
+    forgot password page added
+
+[33mcommit 9700539920f8d70ba95e0edc80f8e28c47627573[m[33m ([m[1;31morigin/dev_loan[m[33m)[m
+Author: nijuyonkadesu <24ksriramv@gmail.com>
+Date:   Thu Mar 30 14:30:29 2023 +0530
+
+    theme update, bottom sheet
+
+[33mcommit 1fd18f40abaa72405291e79329da5568331c08ee[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Thu Mar 30 14:17:06 2023 +0530
+
+    added a seperate dart file for the expenses page.
+
+[33mcommit 11f1ab89a8ca507f971e7dbb9c4b5f41f8e80de6[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Thu Mar 30 11:12:32 2023 +0530
+
+    added a seperate dart file for the signup page
+
+[33mcommit fddf7704da144220fbe3a83666c6eede0b7eae81[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Thu Mar 30 09:53:44 2023 +0530
+
+    added a seperate dart file for the bill tracker page
+
+[33mcommit a0599bc9eff0c02ca029806bc700d990a9c9534b[m
+Author: Santhosh <santhoshgold12@gmail.com>
+Date:   Wed Mar 29 21:34:18 2023 +0530
+
+    Initial commit

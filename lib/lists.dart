@@ -19,23 +19,25 @@ class _MyAppState extends State<MyApp> {
   List<LineSeries<Expense, String>> _getDefaultLineSeries() {
     return <LineSeries<Expense, String>>[
       LineSeries<Expense, String>(
-          animationDuration: 2500,
-          dataSource: myBaby.chartData,
-          xValueMapper: (Expense expense, _) =>
-          '${expense.date.day}/${expense.date.month}',
-          yValueMapper: (Expense expense, _) => expense.inflow,
-          width: 2,
-          name: 'Debit',
-          markerSettings: const MarkerSettings(isVisible: true)),
+        animationDuration: 2500,
+        dataSource: myBaby.chartData,
+        xValueMapper: (Expense expense, _) =>
+        '${expense.date.day}/${expense.date.month}',
+        yValueMapper: (Expense expense, _) => expense.inflow,
+        width: 2,
+        name: 'Debit',
+        markerSettings: const MarkerSettings(isVisible: true),
+      ),
       LineSeries<Expense, String>(
-          animationDuration: 2500,
-          dataSource: myBaby.threshold,
-          xValueMapper: (Expense expense, _) =>
-          '${expense.date.day}/${expense.date.month}',
-          yValueMapper: (Expense expense, _) => expense.amount,
-          width: 2,
-          name: 'Safe Zone',
-          markerSettings: const MarkerSettings(isVisible: false)),
+        animationDuration: 2500,
+        dataSource: myBaby.threshold,
+        xValueMapper: (Expense expense, _) =>
+        '${expense.date.day}/${expense.date.month}',
+        yValueMapper: (Expense expense, _) => expense.amount,
+        width: 2,
+        name: 'Safe Zone',
+        markerSettings: const MarkerSettings(isVisible: false),
+      ),
     ];
   }
 
@@ -45,34 +47,53 @@ class _MyAppState extends State<MyApp> {
       title: ChartTitle(text: 'Debit vs Safe Zone'),
       legend: Legend(overflowMode: LegendItemOverflowMode.wrap),
       primaryXAxis: CategoryAxis(
-          title: AxisTitle(text: 'Day'),
-          edgeLabelPlacement: EdgeLabelPlacement.shift,
-          interval: 2,
-          majorGridLines: const MajorGridLines(width: 0)),
+        title: AxisTitle(text: 'Day'),
+        edgeLabelPlacement: EdgeLabelPlacement.shift,
+        interval: 2,
+        majorGridLines: const MajorGridLines(width: 0),
+      ),
       primaryYAxis: NumericAxis(
-          labelFormat: '₹{value}',
-          axisLine: const AxisLine(width: 0),
-          majorTickLines: const MajorTickLines(color: Colors.transparent)),
+        labelFormat: '₹{value}',
+        axisLine: const AxisLine(width: 0),
+        majorTickLines: const MajorTickLines(color: Colors.transparent),
+      ),
       series: _getDefaultLineSeries(),
       tooltipBehavior: TooltipBehavior(enable: true),
     );
   }
 
-  // Function to handle editing an expense
+
   void _editExpense(BuildContext context, Expense expense) {
-    // Navigate to the AddingBillItemPage with the selected expense data
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => AddingBillItemPage(
           // Pass the expense data to the AddingBillItemPage
           initialAmount: expense.amount.toString(),
-          initialDate: expense.date.toString(), // Adjust the format as needed
+          initialDate: expense.date.toString(),
           initialClassification: expense.classification,
+          onSave: (newDebit, newDate, newClassification) {
+            // Find the index of the expense in the list
+            int index = myBaby.chartData.indexOf(expense);
+
+            // Update the existing expense
+            myBaby.chartData[index] = Expense(
+              date: DateTime.parse(newDate),
+              inflow: newDebit,
+              outflow: expense.outflow, // Keep the original outflow value
+              amount: newDebit,
+              classification: newClassification,
+            );
+
+            // Notify listeners after modifying the list
+            myBaby.notifyListeners();
+
+          },
         ),
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -85,20 +106,24 @@ class _MyAppState extends State<MyApp> {
           Expanded(
             child: ListView.separated(
               itemBuilder: (context, index) {
+                final Expense expense = myBaby.chartData[index];
                 return ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '${myBaby.chartData[index].date.day}/${myBaby.chartData[index].date.month}/${myBaby.chartData[index].date.year}',
+                        '${expense.date.day}/${expense.date.month}/${expense.date.year}',
                       ),
                       Row(
                         children: [
-                          Text(myBaby.chartData[index].inflow.toString()),
+                          Text(
+                            '${expense.amount >= 0 ? 'Debit: ${expense.amount}' : 'Credit: ${-expense.amount}'}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                           IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: () {
-                              _editExpense(context,myBaby.chartData[index]);
+                              _editExpense(context, expense);
                             },
                           ),
                         ],
@@ -117,20 +142,31 @@ class _MyAppState extends State<MyApp> {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     setState(() {
-      //       myBaby.addExpense(Expense(DateTime(2023, 3, 29), 30, 50));
-      //       myBaby.addExpense(Expense(DateTime(2023, 3, 30), 20, 70));
-      //     });
-      //   },
-      //   child: Icon(Icons.add),
-      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddingBillItemPage()),
+            MaterialPageRoute(
+              builder: (context) => AddingBillItemPage(
+                onSave: (newAmount, newDate, newClassification) {
+                  // Handle the save logic here
+                  // You can use newAmount, newDate, newClassification
+                  // to update your data.
+                  setState(() {
+                    myBaby.addExpense(Expense(
+                      date: DateTime.parse(newDate),
+                      inflow: newAmount,
+                      outflow: newAmount >= 0 ? 0.0 : -newAmount, // Set the outflow accordingly
+                      amount: newAmount,
+                      classification: newClassification,
+                    ));
+                  });
+
+                  // Navigate back to the list of values page
+                  Navigator.pop(context);
+                },
+              ),
+            ),
           );
         },
         child: const Icon(Icons.add),

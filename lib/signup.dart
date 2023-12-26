@@ -1,7 +1,9 @@
 import 'package:fintech/network/NetworkApi.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'bill_tracker.dart';
+import 'loan_fillup.dart';
 import 'model/user_data.dart';
 import 'account.dart';
 import 'navigation.dart';
@@ -19,6 +21,13 @@ final myCousin = GetIt.instance<ApiService>();
 String name = "";
 String email = "";
 String password = "";
+
+
+Future<void> StoreAccessToken(accessToken) async {
+  final storage = FlutterSecureStorage();
+  String key = 'access_token';
+  await storage.write(key: key, value: accessToken);
+  print(accessToken);}
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
@@ -193,6 +202,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
+// backedn integration
 void postData() async {
   print("Vanakam");
   var url = Uri.parse('https://fintech-rfnl.onrender.com/api/user/');
@@ -211,6 +221,8 @@ void postData() async {
     if (response.statusCode == 201) {
       print("Vanakam3");
       var data = json.decode(response.body);
+      var accessToken = data['token'];
+      await StoreAccessToken(accessToken);
       print('POST response: $data');
     } else {
       print("Vanakam4");
