@@ -25,7 +25,6 @@ class _MyAppState extends State<MyApp> {
         '${expense.date.day}/${expense.date.month}',
         yValueMapper: (Expense expense, _) => expense.inflow,
         width: 2,
-        name: 'Debit',
         markerSettings: const MarkerSettings(isVisible: true),
       ),
       LineSeries<Expense, String>(

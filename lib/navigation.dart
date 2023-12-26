@@ -4,6 +4,8 @@ import 'package:fintech/loan_intropage.dart';
 import 'package:flutter/material.dart';
 import 'package:fintech/PaymentPage.dart';
 
+import 'network/adding_bill_item.dart';
+
 void main() => runApp(const NavigationScreen());
 
 class NavigationScreen extends StatelessWidget {

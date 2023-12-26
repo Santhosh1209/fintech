@@ -6,24 +6,31 @@ import 'model/person_data.dart';
 import 'lists.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import 'network/adding_bill_item.dart';
+
 var logger = Logger();
 var myBaby = GetIt.I.get<PersonData>();
 
 class BillTrackerPage extends StatefulWidget {
   const BillTrackerPage({super.key});
-
   @override
   _BillTrackerPageState createState() => _BillTrackerPageState();
 }
 
 class _BillTrackerPageState extends State<BillTrackerPage> {
-  String _userName = "Sharad"; // replace with user's name
+  @override
+  void initState() {
+    super.initState();
+    // Call the getBill function when the page is initialized
+    getBill();
+  }
+  String _userName = "User"; // replace with user's name
   String _userImageURL =
       "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50"; // replace with user's image URL
   final _scaffoldKey =
   GlobalKey<ScaffoldState>(); // state of scaffold to control BottomSheet
   void _showBottomSheet() {
-    logger.e("bruh clidker");
+    logger.e("bruh clicker");
     _scaffoldKey.currentState!.showBottomSheet((context) =>
         SizedBox(
           // TODO: Edit UI to fix graphs

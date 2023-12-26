@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:fintech/signup.dart';
+import 'package:http/http.dart' as http;
 import 'package:fintech/navigation.dart';
 import 'package:flutter/material.dart';
 import 'forgot_passwd.dart';
@@ -6,6 +9,8 @@ import 'loan_intropage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final googleSignIn = GoogleSignIn();
+String email = "";
+String password = "";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -80,6 +85,9 @@ class _LoginPageState extends State<LoginPage> {
                       }
                       return null;
                     },
+                    onChanged: (value) {
+                      email = value; // Update the email variable
+                    },
                   ),
                 ),
                 Expanded(
@@ -96,6 +104,9 @@ class _LoginPageState extends State<LoginPage> {
                       // }
                       return null;
                     },
+                    onChanged: (value) {
+                      password = value; // Update the password variable
+                    },
                   ),
                 ),
                 Expanded(
@@ -104,6 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
+                          loginUser();
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) => NavigationScreen()));
                         },
@@ -178,5 +190,37 @@ class _LoginPageState extends State<LoginPage> {
         ),
     )
     );
+  }
+}
+
+// backend integration
+void loginUser() async {
+  print("Vanakam");
+  var url = Uri.parse('https://fintech-rfnl.onrender.com/api/user/login');
+  var headers = {'Content-Type': 'application/json'};
+
+  var payload = {'email': email, 'password': password};
+
+  try {
+    print("Vanakam2");
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: json.encode(payload),
+    );
+
+    if (response.statusCode == 200) {
+      print("Vanakam3");
+      var data = json.decode(response.body);
+      var accessToken = data['token'];
+      await StoreAccessToken(accessToken);
+      print('POST response: $data');
+    } else {
+      print("Vanakam4");
+      throw Exception('Failed to make POST request');
+    }
+  } catch (error) {
+    print("Vanakam5");
+    print('Error making POST request: $error');
   }
 }

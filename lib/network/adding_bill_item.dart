@@ -1,18 +1,25 @@
 import 'dart:math';
 import 'package:fintech/lists.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import '../model/person_data.dart';
+import 'package:fintech/signup.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 
 class AddingBillItemPage extends StatefulWidget {
   final String? initialAmount;
   final String? initialDate;
   final String? initialClassification;
+  final String? id;
   final Function(double, double, String, String) onSave;
 
   const AddingBillItemPage({
     Key? key,
     required this.onSave,
+    this.id,
     this.initialAmount,
     this.initialDate,
     this.initialClassification,
@@ -21,6 +28,7 @@ class AddingBillItemPage extends StatefulWidget {
   @override
   _AddingBillItemPageState createState() => _AddingBillItemPageState();
 }
+
 
 class _AddingBillItemPageState extends State<AddingBillItemPage> {
   final myBaby = GetIt.instance<PersonData>();
@@ -144,6 +152,7 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
 
       // Call the onSave callback
       widget.onSave(debit, credit, parsedDate.toString(), classification);
+      addBill(debit, classification, parsedDate.toString());
       // Navigate back to the previous screen
       Navigator.pop(context);
     } catch (e) {
@@ -171,5 +180,81 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
         style: TextStyle(fontSize: 16.0),
       ),
     );
+  }
+}
+
+// backend integration
+// - (i) POST
+void addBill(double amount, String classification, String date) async {
+  print("Vanakam");
+  var url = Uri.parse('https://fintech-rfnl.onrender.com/api/bill/');
+
+  final storage = FlutterSecureStorage();
+  String key = 'access_token';
+  String? chumma = await storage.read(key: key);
+
+  String sathish = "Bearer ";
+  String concatenatedString = sathish + chumma!;
+  var headers = { 'Authorization': concatenatedString,
+    'Content-Type': 'application/json'};
+
+  var payload = {
+    'amount': amount,
+    'billType': classification,
+    'billDate': date
+  };
+
+  try {
+    print("Vanakam2");
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: json.encode(payload),
+    );
+
+    if (response.statusCode == 200) {
+      print("Vanakam3");
+      var data = json.decode(response.body);
+      print('POST response: $data');
+    } else {
+      print("Vanakam4");
+      throw Exception('Failed to make POST request');
+    }
+  } catch (error) {
+    print("Vanakam5");
+    print('Error making POST request: $error');
+  }
+}
+
+// - (ii) GET -> loads array of bills of a particular user
+void getBill() async {
+  print("Vanakam");
+  var url = Uri.parse('https://fintech-rfnl.onrender.com/api/bill/');
+  final storage = FlutterSecureStorage();
+  String key = 'access_token';
+  String? chumma = await storage.read(key: key);
+  String sathish = "Bearer ";
+  String concatenatedString = sathish + chumma!;
+
+  var headers = {'Authorization': concatenatedString,'Content-Type': 'application/json', };
+
+  try {
+    print("Vanakam2");
+    var response = await http.get(
+      url,
+      headers: headers,
+    );
+
+    if (response.statusCode == 200) {
+      print("Vanakam3");
+      var data = json.decode(response.body);
+      print('GET response: $data');
+    } else {
+      print("Vanakam4");
+      throw Exception('Failed to make GET request');
+    }
+  } catch (error) {
+    print("Vanakam5");
+    print('Error making GET request: $error');
   }
 }

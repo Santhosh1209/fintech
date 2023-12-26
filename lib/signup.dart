@@ -27,7 +27,10 @@ Future<void> StoreAccessToken(accessToken) async {
   final storage = FlutterSecureStorage();
   String key = 'access_token';
   await storage.write(key: key, value: accessToken);
-  print(accessToken);}
+  String? chumma = await storage.read(key: key);
+  print(accessToken);
+  print(chumma);
+}
 
 class _SignUpPageState extends State<SignUpPage> {
   final _formKey = GlobalKey<FormState>();
