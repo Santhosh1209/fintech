@@ -13,10 +13,10 @@ class AddingBillItemPage extends StatefulWidget {
   final String? initialAmount;
   final String? initialDate;
   final String? initialClassification;
-  final String? id;
+  String? id;
   final Function(double, double, String, String) onSave;
 
-  const AddingBillItemPage({
+  AddingBillItemPage({
     Key? key,
     required this.onSave,
     this.id,
@@ -128,7 +128,7 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
     );
   }
 
-  void _saveExpense() {
+  Future<void> _saveExpense() async {
     try {
       // Ensure that amount is not empty
       if (amountController.text.isEmpty) {
@@ -152,9 +152,13 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
 
       // Call the onSave callback
       widget.onSave(debit, credit, parsedDate.toString(), classification);
+      if (mounted){
+        List<dynamic> existingBills = await getBill();
+        int newId = (existingBills.isEmpty) ? 1 : existingBills.length + 1;
+        widget.id = newId.toString();
+        print(widget.id);
+      }
       addBill(debit, classification, parsedDate.toString());
-      // Navigate back to the previous screen
-      Navigator.pop(context);
     } catch (e) {
       print("Error saving expense: $e");
       // Handle the error as needed
@@ -227,7 +231,7 @@ void addBill(double amount, String classification, String date) async {
 }
 
 // - (ii) GET -> loads array of bills of a particular user
-void getBill() async {
+Future<List<dynamic>> getBill() async {
   print("Vanakam");
   var url = Uri.parse('https://fintech-rfnl.onrender.com/api/bill/');
   final storage = FlutterSecureStorage();
@@ -244,11 +248,11 @@ void getBill() async {
       url,
       headers: headers,
     );
-
     if (response.statusCode == 200) {
       print("Vanakam3");
       var data = json.decode(response.body);
       print('GET response: $data');
+      return data;
     } else {
       print("Vanakam4");
       throw Exception('Failed to make GET request');
@@ -256,5 +260,6 @@ void getBill() async {
   } catch (error) {
     print("Vanakam5");
     print('Error making GET request: $error');
+    return [];
   }
 }
