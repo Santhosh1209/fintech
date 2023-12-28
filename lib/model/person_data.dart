@@ -66,7 +66,8 @@ class Expense {
   final double outflow;
   final double amount;
   final String? classification;
-  final String? id;
+  final int? _id;
+  int? get id => _id;
 
   Expense({
     required this.date,
@@ -74,8 +75,8 @@ class Expense {
     required this.outflow,
     required this.amount,
     required this.classification,
-    this.id,
-  });
+    int? id,
+  }) : _id = id;
 
   // Named constructor for deserialization
   factory Expense.fromJson(Map<String, dynamic> json) {
@@ -83,7 +84,7 @@ class Expense {
     double outflow = _calculateOutflow(inflow);
 
     return Expense(
-      id: json['id'],
+      id: json['_id'],
       date: DateTime.parse(json['billDate']),
       inflow: inflow,
       outflow: outflow,
@@ -96,7 +97,7 @@ class Expense {
 // Method to convert Expense object to a JSON map
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      '_id': _id,
       'date': date.toIso8601String(),
       'inflow': inflow,
       'outflow': outflow,

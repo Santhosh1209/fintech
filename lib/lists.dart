@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
 
     // Convert AddingBillItem to Expense
     Expense expenseToUpdate = Expense(
-      id: billItem.id ?? '', // Ensure that the id is retained
+      id: billItem.id ?? null, // Ensure that the id is retained
       date: DateTime.parse(billItem.initialDate ?? ''),
       inflow: initialAmount,
       outflow: (Random().nextInt(2) == 1) ? initialAmount + 125.0 : initialAmount - 85.0,
@@ -110,8 +110,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-
-
   @override
   void initState() {
     super.initState();
@@ -130,6 +128,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   AddingBillItemPage convertExpenseToAddingBillItemPage(Expense expense) {
+    print('Expense ID: ${expense.id}');
     return AddingBillItemPage(
       id: expense.id,
       initialAmount: expense.amount.toString(),
@@ -174,6 +173,7 @@ class _MyAppState extends State<MyApp> {
                                 IconButton(
                                   icon: Icon(Icons.edit),
                                   onPressed: () {
+                                    print('Editing expense with ID: ${expense.id}');
                                     _editExpense(context, convertExpenseToAddingBillItemPage(expense));
                                   },
                                 ),

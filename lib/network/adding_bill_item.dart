@@ -12,7 +12,7 @@ class AddingBillItemPage extends StatefulWidget {
   final String? initialAmount;
   final String? initialDate;
   final String? initialClassification;
-  String? id;
+  int? id;
   final Function(double, double, String, String) onSave;
 
   AddingBillItemPage({
@@ -44,7 +44,7 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
     classificationController.text = widget.initialClassification ?? '';
 
     // Ensure that the id is retained
-    widget.id = widget.id ?? '';
+    widget.id = widget.id ?? null;
   }
 
   Widget build(BuildContext context) {
@@ -156,8 +156,8 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
       if (mounted) {
         List<dynamic> existingBills = await getBill();
         int newId = (existingBills.isEmpty) ? 1 : existingBills.length + 1;
-        widget.id = newId.toString();
-        print(widget.id);
+        widget.id = newId;
+        print('After updating widget.id: ${widget.id}');
       }
       if (widget.id == null){
         print('widget.id is null');
@@ -196,7 +196,7 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
 
 // backend integration
 // - (i) POST
-void addBill(double amount, String classification, String date ,String? id) async {
+void addBill(double amount, String classification, String date ,int? id) async {
   print("Vanakam");
   var url = Uri.parse('https://fintech-rfnl.onrender.com/api/bill/');
 
