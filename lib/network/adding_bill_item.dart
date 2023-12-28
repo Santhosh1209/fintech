@@ -1,13 +1,12 @@
 import 'dart:math';
-import 'package:fintech/lists.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import '../lists.dart';
 import '../model/person_data.dart';
 import 'package:fintech/signup.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 
 class AddingBillItemPage extends StatefulWidget {
   final String? initialAmount;
@@ -29,7 +28,6 @@ class AddingBillItemPage extends StatefulWidget {
   _AddingBillItemPageState createState() => _AddingBillItemPageState();
 }
 
-
 class _AddingBillItemPageState extends State<AddingBillItemPage> {
   final myBaby = GetIt.instance<PersonData>();
 
@@ -44,6 +42,9 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
     amountController.text = widget.initialAmount ?? '';
     dateController.text = widget.initialDate ?? '';
     classificationController.text = widget.initialClassification ?? '';
+
+    // Ensure that the id is retained
+    widget.id = widget.id ?? '';
   }
 
   Widget build(BuildContext context) {
@@ -91,7 +92,7 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
                     onPressed: () {
                       // TODO: Implement save logic
                       _saveExpense();
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp())); // Save button
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp())); // Replace the current route
                     },
                   ),
                 ],
@@ -139,7 +140,7 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
       double debit = double.parse(amountController.text);
       Random random = Random();
       int x = random.nextInt(2);
-      double credit = (x == 0) ? debit + 10.0 : debit - 10.0;
+      double credit = (x == 1) ? debit + 175.0 : debit - 85.0;
       String date = dateController.text;
       String classification = classificationController.text;
 
@@ -152,13 +153,19 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
 
       // Call the onSave callback
       widget.onSave(debit, credit, parsedDate.toString(), classification);
-      if (mounted){
+      if (mounted) {
         List<dynamic> existingBills = await getBill();
         int newId = (existingBills.isEmpty) ? 1 : existingBills.length + 1;
         widget.id = newId.toString();
         print(widget.id);
       }
-      addBill(debit, classification, parsedDate.toString());
+      if (widget.id == null){
+        print('widget.id is null');
+      } else {
+        print('widget.id is not null');
+      }
+      addBill(debit, classification, parsedDate.toString(), widget.id);
+
     } catch (e) {
       print("Error saving expense: $e");
       // Handle the error as needed
@@ -189,7 +196,7 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
 
 // backend integration
 // - (i) POST
-void addBill(double amount, String classification, String date) async {
+void addBill(double amount, String classification, String date ,String? id) async {
   print("Vanakam");
   var url = Uri.parse('https://fintech-rfnl.onrender.com/api/bill/');
 
@@ -203,6 +210,7 @@ void addBill(double amount, String classification, String date) async {
     'Content-Type': 'application/json'};
 
   var payload = {
+    'id':id,
     'amount': amount,
     'billType': classification,
     'billDate': date
@@ -231,7 +239,7 @@ void addBill(double amount, String classification, String date) async {
 }
 
 // - (ii) GET -> loads array of bills of a particular user
-Future<List<dynamic>> getBill() async {
+Future<List<Expense>> getBill() async {
   print("Vanakam");
   var url = Uri.parse('https://fintech-rfnl.onrender.com/api/bill/');
   final storage = FlutterSecureStorage();
@@ -240,7 +248,7 @@ Future<List<dynamic>> getBill() async {
   String sathish = "Bearer ";
   String concatenatedString = sathish + chumma!;
 
-  var headers = {'Authorization': concatenatedString,'Content-Type': 'application/json', };
+  var headers = {'Authorization': concatenatedString, 'Content-Type': 'application/json'};
 
   try {
     print("Vanakam2");
@@ -252,7 +260,11 @@ Future<List<dynamic>> getBill() async {
       print("Vanakam3");
       var data = json.decode(response.body);
       print('GET response: $data');
-      return data;
+      // Convert the data into a list of Expense objects
+      List<Expense> bills = (data as List)
+          .map((billData) => Expense.fromJson(billData))
+          .toList();
+      return bills;
     } else {
       print("Vanakam4");
       throw Exception('Failed to make GET request');
