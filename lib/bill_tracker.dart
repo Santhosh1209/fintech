@@ -146,7 +146,7 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
       LineSeries<Expense, String>(
         animationDuration: 2500,
         dataSource: bills,
-        xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+        xValueMapper: (Expense expense, _) => expense.date,
         yValueMapper: (Expense expense, _) => expense.outflow,
         width: 2,
         name: 'Debit',
@@ -155,7 +155,7 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
       LineSeries<Expense, String>(
         animationDuration: 2500,
         dataSource: bills,
-        xValueMapper: (Expense expense, _) => '${expense.date.day}/${expense.date.month}',
+        xValueMapper: (Expense expense, _) => expense.date,
         yValueMapper: (Expense expense, _) => expense.inflow,
         width: 2,
         name: 'Credit',

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import '../lists.dart';
+import '../main.dart';
 import '../model/person_data.dart';
 import 'package:fintech/signup.dart';
 import 'package:http/http.dart' as http;
@@ -12,13 +13,13 @@ class AddingBillItemPage extends StatefulWidget {
   final String? initialAmount;
   final String? initialDate;
   final String? initialClassification;
-  int? id;
+  int? pivot;
   final Function(double, double, String, String) onSave;
 
   AddingBillItemPage({
     Key? key,
     required this.onSave,
-    this.id,
+    this.pivot,
     this.initialAmount,
     this.initialDate,
     this.initialClassification,
@@ -44,7 +45,7 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
     classificationController.text = widget.initialClassification ?? '';
 
     // Ensure that the id is retained
-    widget.id = widget.id ?? null;
+    widget.pivot = widget.pivot ?? null;
   }
 
   Widget build(BuildContext context) {
@@ -90,7 +91,6 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
                   _buildButton(
                     text: 'Save',
                     onPressed: () {
-                      // TODO: Implement save logic
                       _saveExpense();
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyApp())); // Replace the current route
                     },
@@ -156,20 +156,20 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
       if (mounted) {
         List<dynamic> existingBills = await getBill();
         int newId = (existingBills.isEmpty) ? 1 : existingBills.length + 1;
-        widget.id = newId;
-        print('After updating widget.id: ${widget.id}');
+        widget.pivot = newId;
+        print('After updating widget.id: ${widget.pivot}');
       }
-      if (widget.id == null){
+      if (widget.pivot == null) {
         print('widget.id is null');
       } else {
         print('widget.id is not null');
       }
-      addBill(debit, classification, parsedDate.toString(), widget.id);
-
-    } catch (e) {
+        addBill(debit, classification, parsedDate.toString(), widget.pivot);
+    }catch (e) {
       print("Error saving expense: $e");
       // Handle the error as needed
     }
+  }
   }
 
   Widget _buildButton({
@@ -192,11 +192,10 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
       ),
     );
   }
-}
 
 // backend integration
 // - (i) POST
-void addBill(double amount, String classification, String date ,int? id) async {
+void addBill(double amount, String classification, String date ,int? pivot) async {
   print("Vanakam");
   var url = Uri.parse('https://fintech-rfnl.onrender.com/api/bill/');
 
@@ -210,7 +209,7 @@ void addBill(double amount, String classification, String date ,int? id) async {
     'Content-Type': 'application/json'};
 
   var payload = {
-    'id':id,
+    'pivot':pivot,
     'amount': amount,
     'billType': classification,
     'billDate': date

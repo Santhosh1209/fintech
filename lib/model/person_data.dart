@@ -60,14 +60,13 @@ class PersonData with ChangeNotifier {
   }
 }
 
-class Expense {
-  final DateTime date;
-  final double inflow;
-  final double outflow;
-  final double amount;
-  final String? classification;
-  final int? _id;
-  int? get id => _id;
+class Expense{
+  String date;
+  double inflow;
+  double outflow;
+  double amount;
+  String classification;
+  final int? pivot;
 
   Expense({
     required this.date,
@@ -75,8 +74,8 @@ class Expense {
     required this.outflow,
     required this.amount,
     required this.classification,
-    int? id,
-  }) : _id = id;
+    this.pivot,
+  });
 
   // Named constructor for deserialization
   factory Expense.fromJson(Map<String, dynamic> json) {
@@ -84,8 +83,8 @@ class Expense {
     double outflow = _calculateOutflow(inflow);
 
     return Expense(
-      id: json['_id'],
-      date: DateTime.parse(json['billDate']),
+      pivot: json['pivot'],
+      date: json['billDate'],
       inflow: inflow,
       outflow: outflow,
       amount: inflow,
@@ -97,8 +96,8 @@ class Expense {
 // Method to convert Expense object to a JSON map
   Map<String, dynamic> toJson() {
     return {
-      '_id': _id,
-      'date': date.toIso8601String(),
+      'pivot': pivot,
+      'date': date,
       'inflow': inflow,
       'outflow': outflow,
       'amount': amount,
