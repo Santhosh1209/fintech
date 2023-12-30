@@ -68,9 +68,9 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
               const SizedBox(height: 16.0),
               _buildTextField(
                 controller: dateController,
-                label: 'Date (dd/mm/yyyy)',
-                hintText: 'e.g., 01/12/2023',
-                keyboardType: TextInputType.datetime,
+                label: 'Date (yyyy/mm/dd)',
+                hintText: 'e.g., 2023/12/09',
+                keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 16.0),
               _buildTextField(
@@ -141,15 +141,9 @@ class _AddingBillItemPageState extends State<AddingBillItemPage> {
       Random random = Random();
       int x = random.nextInt(2);
       double credit = (x == 1) ? debit + 175.0 : debit - 85.0;
-      String date = dateController.text;
+      String dateStr = dateController.text;
+      DateTime parsedDate = DateTime.parse(dateStr + ' 00:00:00.000');
       String classification = classificationController.text;
-
-      // Check if the date is in the correct format
-      DateTime? parsedDate = DateTime.tryParse(date);
-      if (parsedDate == null) {
-        // Handle incorrect date format as needed
-        return;
-      }
 
       // Call the onSave callback
       widget.onSave(debit, credit, parsedDate.toString(), classification);

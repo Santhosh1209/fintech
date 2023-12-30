@@ -58,20 +58,6 @@ class _SignUpPageState extends State<SignUpPage> {
             children: <Widget>[
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Colors.lightBlueAccent,
-                        Colors.blueAccent,
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
-                    ),
-                  ),
                   child: Center(
                     child: Text(
                       'Welcome Onboard!',
@@ -80,7 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         fontFamily: 'Montserrat',
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -109,7 +95,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child:
                 TextFormField(
                   controller: _nameController,
-                  obscureText: true,
+                  obscureText: false,
                   decoration: InputDecoration(
                     labelText: 'Name',
                     hintText: 'Enter your name',
@@ -126,7 +112,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child:
                 TextFormField(
                   controller: _emailController,
-                  obscureText: true,
+                  obscureText: false,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
@@ -205,7 +191,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
-// backedn integration
+// backend integration
 void postData() async {
   print("Vanakam");
   var url = Uri.parse('https://fintech-rfnl.onrender.com/api/user/');
