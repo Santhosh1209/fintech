@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:fintech/network/adding_bill_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -80,7 +81,6 @@ class _EditBillPageState extends State<EditBillPage> {
                     text: 'Save',
                     onPressed: () {
                       //editBill(expense.amount, expense.classification, expense.date, expense.pivot)
-                      Navigator.pop(context); // Navigate back after saving
                     },
                   ),
                 ],
@@ -130,9 +130,9 @@ class _EditBillPageState extends State<EditBillPage> {
 
           // Call the editBill function with user's changes
           editBill(amount, classification, date, pivot);
-
           // Navigate back after saving
-          Navigator.pop(context);
+          Navigator.pushReplacement(context, MaterialPageRoute(
+              builder: (context) => BillTrackerPage()));
         },
         style: ElevatedButton.styleFrom(
           primary: Colors.white,
@@ -148,9 +148,6 @@ class _EditBillPageState extends State<EditBillPage> {
         ),
       );
     }
-
-// Add your _buildTextField and _buildButton functions here
-
 }
 
 // backend integration

@@ -20,6 +20,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _isLoading = false;
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -35,8 +36,9 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
+                SizedBox(height: 10.0),
                 Padding(
-                  padding: EdgeInsets.all(10.0),
+                  padding: EdgeInsets.all(20.0),
                   child: Center(
                     child: Text(
                       'Welcome Back!',
@@ -49,14 +51,31 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Center(
+                    child: Text(
+                      'Empowering Your Finances, One Secure Login at a Time',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(height: 20.0), // Add this line
                 Padding(
                   padding: EdgeInsets.all(10.0),
-                  child: Image(
-                  image: AssetImage('images/undraw_transfer_money_re_6o1h.png'),
-                )
+                  child: Container(
+                    height : 225,
+                    child: Image(
+                    image: AssetImage('images/undraw_transfer_money_re_6o1h.png'),
                 ),
-                SizedBox(height: 20.0), // Add this line
+                  )
+                ),
+                SizedBox(height: 30.0), // Add this line
                 Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Center(
@@ -77,6 +96,9 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -95,6 +117,9 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Enter your password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                   ),
                   validator: (value) {
                     // if (value.isEmpty) {
@@ -109,23 +134,27 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(height: 20.0), // Add this line
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        loginUser();
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => NavigationScreen()));
-                      },
-                      child: Text(
-                        'Log in Here',
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.7,
-                        ),
-                      ),
-                    ),
-                    Text("  "),
+                  children: [ElevatedButton(
+                onPressed: () async {
+          setState(() {
+          _isLoading = true;
+          });
+          await loginUser();
+          Navigator.push(context, MaterialPageRoute(builder: (context) => NavigationScreen()));
+          setState(() {
+          _isLoading = false;
+          });
+          },
+            child: _isLoading ? CircularProgressIndicator() : Text(
+              'Log in Here',
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.bold,
+                fontSize: 14.7,
+              ),
+            ),
+          ),
+          Text("  "),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.push(context,
@@ -153,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
 
 
 // backend integration
-void loginUser() async {
+Future<void> loginUser() async {
   print("Vanakam");
   var url = Uri.parse('https://fintech-rfnl.onrender.com/api/user/login');
   var headers = {'Content-Type': 'application/json'};

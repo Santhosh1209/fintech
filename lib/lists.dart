@@ -83,20 +83,6 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  // AddingBillItemPage convertExpenseToAddingBillItemPage(Expense expense) {
-  //   print('Expense ID: ${expense.id}');
-  //   return AddingBillItemPage(
-  //     id: expense.id,
-  //     initialAmount: expense.amount.toString(),
-  //     initialDate: expense.date.toString(),
-  //     initialClassification: expense.classification,
-  //     onSave: (newDebit, newCredit, newDate, newClassification) {
-  //       // Handle the onSave logic if needed
-  //     },
-  //   );
-  // }
-
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
@@ -138,6 +124,12 @@ class _MyAppState extends State<MyApp> {
                                     );
                                   },
                                 ),
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () {
+                                    //deleteBill(expense.pivot);
+                                  },
+                                )
                               ],
                             ),
                           ],
@@ -157,25 +149,23 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            final result = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => AddingBillItemPage(
-                  onSave: (newAmount, newCredit, newDate, newClassification) {
-                    setState(() {
-                      myBaby.addExpense(Expense(
-                        date: DateTime.parse(newDate).toString(),
-                        inflow: newAmount,
-                        outflow: newCredit,
-                        amount: newAmount,
-                        classification: newClassification,
-                      ));
-                    });
-
+                onSave: (newAmount, newCredit, newDate, newClassification) async {
+                  myBaby.addExpense(Expense(
+                    date: DateTime.parse(newDate).toString(),
+                    inflow: newAmount,
+                    outflow: newCredit,
+                    amount: newAmount,
+                    classification: newClassification,
+                  ));
+                    },
                     // Navigate back to the list of values page
-                    Navigator.pop(context);
-                  },
+                  onNewBillAdded: _loadBills,
+                    onLoadBills: _loadBills,
                 ),
               ),
             );

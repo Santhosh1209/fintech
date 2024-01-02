@@ -50,120 +50,110 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(25.0),
         child: Form(
           key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  child: Center(
-                    child: Text(
-                      'Welcome Onboard!',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                SizedBox(height: 20.0),
+                Text(
+                  'Welcome Onboard!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   ),
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Center(
-                    child: Text(
-                      'Please enter your details to continue',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Montserrat',
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.grey,
-                      ),
-                    ),
+                Image(
+                  image: AssetImage('images/undraw_Finance_re_gnv2.png'),
+                ),
+                Text(
+                  'Please enter your details to continue',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontFamily: 'Poppins',
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.grey,
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-              Expanded(
-                child:
+                SizedBox(height: 30),
                 TextFormField(
                   controller: _nameController,
                   obscureText: false,
                   decoration: InputDecoration(
                     labelText: 'Name',
                     hintText: 'Enter your name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                   ),
                   validator: (value) {
-                    // if (value.isEmpty) {
-                    //   return 'Please enter your password';
-                    // }
                     return null;
                   },
                 ),
-              ),
-              Expanded(
-                child:
+                SizedBox(height: 20),
                 TextFormField(
                   controller: _emailController,
                   obscureText: false,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                   ),
                   validator: (value) {
-                    // if (value.isEmpty) {
-                    //   return 'Please enter your password';
-                    // }
                     return null;
                   },
                 ),
-              ),
-              Expanded(
-                child:
+                SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Enter your password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                   ),
                   validator: (value) {
-                    // if (value.isEmpty) {
-                    //   return 'Please enter your password';
-                    // }
                     return null;
                   },
                 ),
-              ),
-              SizedBox(height: 30),
-              ElevatedButton(
-                child: Text('Sign Up'),
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Perform sign-up action
-                    name = _nameController.text;
-                    email = _emailController.text;
-                    password = _passwordController.text;
-                    print('Name: $name\nEmail: $email\nPassword: $password');
-                    postData();
-                  }
-                },
-              ),
-              Expanded(
-                child: Row(
+                SizedBox(height: 30),
+                ElevatedButton(
+                  child: Text('Sign Up',style: TextStyle(fontWeight: FontWeight.bold),),
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      name = _nameController.text;
+                      email = _emailController.text;
+                      password = _passwordController.text;
+                      print('Name: $name\nEmail: $email\nPassword: $password');
+                      postData();
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) =>
+                              NavigationScreen()));
+                    }
+                  },
+                ),
+                SizedBox(height: 20),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Already have an account?',
+                    Text(
+                      'Already have an account?',
                       style: TextStyle(
                         fontFamily: 'Poppins',
                         fontSize: 14.0,
-                      ),),
+                      ),
+                    ),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -181,16 +171,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                     ),
                   ],
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-
 // backend integration
 void postData() async {
   print("Vanakam");

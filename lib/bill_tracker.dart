@@ -66,7 +66,6 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
       return [];
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

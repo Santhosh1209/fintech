@@ -94,7 +94,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
             ),
             SizedBox(height: 20),
             Text(
-              'Sharad',
+              'USER',
               style: TextStyle(fontSize: 24),
             ),
             SizedBox(height: 40),
