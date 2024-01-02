@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'model/person_data.dart';
@@ -20,7 +21,7 @@ class BillTrackerPage extends StatefulWidget {
 class _BillTrackerPageState extends State<BillTrackerPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  final String _userImageURL =  "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50";
+  final String _userImageURL = "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50";
   final String _userName = 'USER';
 
   void _showBottomSheet(BuildContext context) {
@@ -66,6 +67,7 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
       return [];
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,12 +142,13 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
     );
   }
 
-  List<LineSeries<Expense, String>> _getLineSeriesWithBills(List<Expense> bills) {
+  List<LineSeries<Expense, String>> _getLineSeriesWithBills(
+      List<Expense> bills) {
     return <LineSeries<Expense, String>>[
       LineSeries<Expense, String>(
         animationDuration: 2500,
         dataSource: bills,
-        xValueMapper: (Expense expense, _) => expense.date,
+        xValueMapper: (Expense expense, _) => DateFormat('dd/MM').format(DateTime.parse(expense.date)),
         yValueMapper: (Expense expense, _) => expense.outflow,
         width: 2,
         name: 'Debit',
@@ -154,7 +157,7 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
       LineSeries<Expense, String>(
         animationDuration: 2500,
         dataSource: bills,
-        xValueMapper: (Expense expense, _) => expense.date,
+        xValueMapper: (Expense expense, _) => DateFormat('dd/MM').format(DateTime.parse(expense.date)),
         yValueMapper: (Expense expense, _) => expense.inflow,
         width: 2,
         name: 'Credit',
@@ -163,25 +166,49 @@ class _BillTrackerPageState extends State<BillTrackerPage> {
     ];
   }
 
-  SfCartesianChart _buildLineChartWithBills(List<Expense> bills) {
+  Column _buildLineChartWithBills(List<Expense> bills) {
     print('Number of bills: ${bills.length}');
-    return SfCartesianChart(
-      plotAreaBorderWidth: 0,
-      title: ChartTitle(text: 'Debit vs Credit'),
-      legend: Legend(overflowMode: LegendItemOverflowMode.wrap),
-      primaryXAxis: CategoryAxis(
-        title: AxisTitle(text: 'Day'),
-        edgeLabelPlacement: EdgeLabelPlacement.shift,
-        interval: 2,
-        majorGridLines: const MajorGridLines(width: 0),
-      ),
-      primaryYAxis: NumericAxis(
-        labelFormat: '₹{value}',
-        axisLine: const AxisLine(width: 0),
-        majorTickLines: const MajorTickLines(color: Colors.transparent),
-      ),
-      series: _getLineSeriesWithBills(bills),
-      tooltipBehavior: TooltipBehavior(enable: true),
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'Debit',
+                style: TextStyle(color: Colors.red[800]),
+              ),
+              Text(
+                ' vs ',
+              ),
+              Text(
+                'Credit',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: SfCartesianChart(
+            plotAreaBorderWidth: 0,
+            legend: Legend(overflowMode: LegendItemOverflowMode.wrap),
+            primaryXAxis: CategoryAxis(
+              title: AxisTitle(text: 'Day'),
+              edgeLabelPlacement: EdgeLabelPlacement.shift,
+              interval: 2,
+              majorGridLines: const MajorGridLines(width: 0),
+            ),
+            primaryYAxis: NumericAxis(
+              labelFormat: '₹{value}',
+              axisLine: const AxisLine(width: 0),
+              majorTickLines: const MajorTickLines(color: Colors.transparent),
+            ),
+            series: _getLineSeriesWithBills(bills),
+            tooltipBehavior: TooltipBehavior(enable: true),
+          ),
+        ),
+      ],
     );
   }
 }

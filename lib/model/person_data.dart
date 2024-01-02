@@ -88,11 +88,10 @@ class Expense{
       inflow: inflow,
       outflow: outflow,
       amount: inflow,
-      classification: json['billType'], // Assuming billType corresponds to classification
+      classification: json['billType'],
     );
   }
 
-  // Method to convert Expense object to a JSON map
 // Method to convert Expense object to a JSON map
   Map<String, dynamic> toJson() {
     return {

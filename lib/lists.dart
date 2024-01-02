@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'EditBillPage.dart';
 import 'main.dart';
@@ -28,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       LineSeries<Expense, String>(
         animationDuration: 2500,
         dataSource: myBaby.chartData,
-        xValueMapper: (Expense expense, _) => expense.date,
+        xValueMapper: (Expense expense, _) => DateFormat('dd/MM').format(DateTime.parse(expense.date)),
         yValueMapper: (Expense expense, _) => expense.inflow,
         width: 2,
         markerSettings: const MarkerSettings(isVisible: true),
@@ -36,7 +37,7 @@ class _MyAppState extends State<MyApp> {
       LineSeries<Expense, String>(
         animationDuration: 2500,
         dataSource: myBaby.threshold,
-        xValueMapper: (Expense expense, _) => expense.date,
+        xValueMapper: (Expense expense, _) => DateFormat('dd/MM').format(DateTime.parse(expense.date)),
         yValueMapper: (Expense expense, _) => expense.amount,
         width: 2,
         name: 'Safe Zone',
